@@ -3,8 +3,8 @@
 computer science에 대한 전반적인 공부 내용 정리
  
 ## 목차
-- OS(Operate System)
-- CN(Computer Network)
+- [OS(Operate System)](#OS)
+- [CN(Computer Network)](#CN)
 - DB(DataBase)
 - security
 
