@@ -1,5 +1,18 @@
 # Lecture1 Computer System Overview
  
+# 제목
+<details>
+<summary>소제목</summary>
+<div markdown="1">
+
+|제목|내용|
+|--|--|
+|1|1|
+|2|10|
+
+</div>
+</details>
+
 # 운영체제
 컴퓨터 시스템 자원을 관리하여
 사용자와 응용프로그램들에게 서비스를 제공하는 것
