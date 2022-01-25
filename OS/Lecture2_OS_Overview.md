@@ -13,7 +13,7 @@
  > *thread : process 보자 작은 단위 (추후 설명 예정)
 - System management > 시스템 보호
 
-# 컴퓨터 시스템의 구성
+## 컴퓨터 시스템의 구성
 OS
 - Kernel : 운영체제의 핵심 (추후 설명 예정)
 - System call Interface <br>
@@ -21,7 +21,7 @@ OS
   - 필요한 기능이 있으면 커널에 요청을 하는 통로
   - 커널이 제공하는 기능들 중 사용자가 사용할 수 있는 기능들을 모아 놓은 것들
 
-# 컴퓨터 시스템의 구성
+## 컴퓨터 시스템의 구성
 
 # 운영체제의 구분
 ## 동시 사용자 수
@@ -89,7 +89,7 @@ OS
 - 단점
   - 성능이 낮음
 
-### Parallel Processing System, 병렬처리 시스템
+### Parallel Processing System, 병렬처리 시스템 (Tightly-coupled system)
 성능이 낮으니 하나의 컴퓨터에 여러개의 cpu를 넣자!
 - 단일 시스템 내에서 둘 이상의 프로세서 사용
 - 메모리 등의 자원 공유 (Tightly-coupled system) : cpu는 여러개, 기타 자원(기억장치, 주변장치)들은 공유
@@ -98,4 +98,30 @@ OS
   - 신뢰성 향상 (cpu하나가 고장나도 정상 동작 가능)
 - 프로세서간 관계 및 역할 관리 필요
 
-### Distributed Processing Systems 
+### Distributed Processing Systems, 분산 처리 시스템 (Losely-coupled system)
+컴퓨터 한대 안에 cpu를 100개 넣을 수 있을까? > 공간적 시스템적 제약이 있음 <br>
+컴퓨터를 여러대 붙이자! <br>
+네트워크를 사용해서 컴퓨터 여러대를 묶는 방식
+- 네트워크를 기반으로 구축된 병렬처리 시스템 (Losely-coupled system)
+  - 물리적인 분산, 통신망 이용한 상호 연결 > 여러 컴퓨터를 하나로 묶기 편함
+  - 각각의 컴퓨터(node)는 자신의 운영체제를 탑재
+  - 각 컴퓨터는 **분산운영체제**를 통해 관리 (은페성, transparency)
+  - ex ) 클러스터 시스템, 클라이언트 서버 시스템
+- 장점
+  - 자원 공유를 통한 높은 성능
+  - 고 신뢰성, 높은 확정성
+- 단점
+  - 구축 및 유지보수 관리가 어려움
+
+-
+
+### Real-time Systems, 실시간 시스템
+- 작업 처리에 제한 시간(deadline)을 갖는 시스템 : 제한 시간 내에 서비스를 제공하는것이 자원 활용 효율보다 중요 
+- 작업의 종류
+  - Hard real-time task : 시간 제약을 지키지 못하는 경우 시스템에 치명적인 영향 ex) 발전소 제어, 무기 제어
+  - Soft real-time task : 동영상 재생
+  - Non real-time task
+  
+# 운영체제의 구조
+
+# 운영체제의 기능
