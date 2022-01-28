@@ -94,6 +94,56 @@
   - 다른프로세스가 작업중일 수 있기 때문에 running으로 가지 않음
 
 #### Suspended State
--  메모리를할당 받지 못한(빼앗긴) 상태
-- 
+- suspended ready
+  - 메모리를할당 받지 못한(빼앗긴) 상태
+- suspended blocked
+  - blcoked 상태에서 메모리까지 빼앗긴 상태 
+- memory image를 swap device에 보관
+  - 프로세스가 작업을 하던 중 메모리를 빼앗기게 된다면? 
+  - 현재까지 했던 작업 기록이 사라질 수 있음
+  - 다시 프로세스가 작업을 하게 된다면 처음부터 다시 해야함 > 매우 비효율적
+  - 메모리 이미지를 저장하여 작업 내용을 저장    
+> swap device : 프로그램 정보 저장을 위한 특별한 파일 시스템 
+- swap-out > suspended
+- swap-in > resume, active
 
+#### Terminated/Zombie State
+- 프로세스 수행이 끝난 상태
+- 모든 자원 반납 후
+- 커널 내에 일부 PCB 정보만 남아 있는 상태
+  - 프로세스 관리를 위해 정보 수집 
+    - 이 프로세스가 어떤 자원을 주로 요청했는지 어떤 일을 했는 등에 대한 정보
+  - 커널의 정보 수집이 끝나면 해당 프로세스를 삭제 한다 
+
+## 프로세스 관리를 위한 자료구조
+- ready state
+  - ready Queue : ready 프로세스가 줄서 있는 공간 > scheduling
+- block state : block된 프로세스가 요청한 외부 자원들 리스트
+  - I/O Queue
+  - Device Queue
+
+## 인터럽트(Interrupt)
+- 예상치 못한, 외부에서 발생한 이벤트 (unexpected, external events)
+- 인터럽트의 종류
+  - I/O
+  - Clock
+  - Console
+  - Program check
+  - Machine check
+  - Inter-process interrupt
+  - System call  
+ 
+### 인터럽트 처리 과정
+## Context Switching(문맥 교환)
+> context
+> 프로세스와 관련된 정보들의 집합
+> In CPU > CPU register context
+> In Memory > Code & data, Stack, PCB
+
+- Context saving
+- contet restoring
+- context swiching ≌ Process switching
+
+### Context Switching Overhead
+- Context switching에 소요되는 비용
+- 불필요한 Context switching을 줄이는 것이 중요
