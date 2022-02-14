@@ -71,7 +71,7 @@
 - 커널이 관리하는 메모리 영역에 저장
 
 ### PCB가 관리하는 정보
-- PID : process Identification Number
+- PID(process Identification Number) : 프로세스 식별자
 - 스케쥴링 정보 > 추후 추가
 - 프로세스 상태
 - 메모리 관리 정보
