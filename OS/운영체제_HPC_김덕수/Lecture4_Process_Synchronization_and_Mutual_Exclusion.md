@@ -184,7 +184,7 @@ V(S) {
 - 임의의 s 변수 하나에 ready queue 하나가 할당 됨
 
 ##### semaphore 종류
-- binary semaphore
+- binary semaphore : mutex
 - counting semaphore
 
 ##### 세부 코드
