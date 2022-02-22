@@ -61,7 +61,7 @@ packet switching 의 동시 사용자 수의 제약이 없지만, 일정 이상 
 1. nodal processing → (개선법) 좋은 라우터로 변경 <br>
  패킷 검사
     - check bit errors
-    - determine output link
+    - determine output link : header 의 목적지 확인
 
 2. queue delay → user 들의 패턴이므로 개선이 어렵다 <br> 
  먼저 큐에 들어온 다른 패킷들이 모두 처리 될때 까지 대기
