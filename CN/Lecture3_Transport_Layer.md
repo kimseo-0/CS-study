@@ -1,4 +1,6 @@
 # chapter 3: Transport layer
+
+## Intro
 ???
 Transport layer 에서 기본 기능
 - multiplexing
@@ -6,6 +8,14 @@ Transport layer 에서 기본 기능
 ???
 
 ## Reliable Data Transfer Protocol
+### 기본 개념
+- mechanism for packet error
+    - error detection
+    - feedback
+    - retransmission
+    - sequence #
+- mechanism for packet loss 
+    - time out
 ### 1
 - underlying 에 패킷 에러 없음
 - 그냥 보내면 됨
@@ -54,6 +64,7 @@ ACK(seq#)을 보냄
 
 ## pipelined protocols : increased utilization
 ### GBN (Go-Back-N)
+#### GBN 특징
 > window size : 한번에 보낼 패킷 사이즈
 > ACK N : N 번 packet 까지 완벽하게 잘 받았다는 의미
 
@@ -64,6 +75,7 @@ receiver 는 현재 기다리는 패킷 번호가 제대로 도착할 때까지 
 > N이 클수록 유실 발생시 재전송할 패킷의 양이 늘어남
 
 ### Selective Repeat
+#### seletive Repeat 특징
 > ACK N : N 번 packet 을 완벽하게 잘 받았다는 의미
 
 > 순서에 맞지 않는 패킷이라도 에러가 없다면 저장함 <br>
@@ -75,8 +87,8 @@ receiver 는 현재 기다리는 패킷 번호가 제대로 도착할 때까지 
 > sender 에서 모든 패킷에 timer 를 다는 것이 이론적으로는 좋은 방법이지만
 > 실질적으로는 오버헤드 발생
 
-
 ## TCP
+### TCP 특징
 - point-to-point <br>
 하나의 소켓(P1)과 하나의 소켓(P2) 사이(한쌍의 소켓 사이)의 통신
 - reliable, in-order byte
@@ -162,9 +174,49 @@ Data 도 함께 전송 가능
 > 마지막 ACK 가 제대로 도착할 때 까지 기다리는 시간
 
 ## Principle of Congestion Control
-### End-end congestion control
-network 내부의 상황을 알아서 유추, 판단 하는 방식
-> 실제로 구현 방식
-
-### Network-assisted congestion control 
+- Network-assisted congestion control : 
 network 의 router 가 feedback 제공
+- End-end congestion control : 
+network 내부의 상황을 알아서 유추, 판단 하는 방식(실제 사용)
+ 
+### End-end congestion control
+#### 3 main phases
+1. slow start
+네트워크 상황을 아직 모르는 상황
+보내는 패킷을 늘려가면서 네트워크 상황을 유추
+> 늘리는 패킷 양은 linear 보다 더 빠르다
+
+2. additive increase
+threshold 를 지나면 linear 하게 증가
+
+3. multiplicative decrease
+보내는 양 감소
+
+> TCP Tahoe vs TCP Reno   
+> - TCP Tahoe : 보내는 양 1/2
+> - TCP Reno : 
+> 패킷 유실이 발생하는 두가지 상황에 따라 다르게 동작
+> 1. time out : 처음부터 다시 시작(slow start 부터)
+> 2. 3 duplicate ACK : 패킷 양 1/2 후 linear 하게 증가 
+> time out 이 발생했을 때 3 duplicate ACK
+> 보다 네트워크 상황이 더 나쁠 확률이 높기 때문에 
+
+> MSS(Maximum segment size) : 500byte   
+> 위에서 증가하는 하나의 단위는 500byte
+
+> 보낼 수 있는 패킷의 양에 따라 윈도우 사이즈가 변경된다
+> 즉, 가장 처음 패킷의 양은 1MSS 이므로 윈도우 사이즈도 500byte
+
+> rate = CongWin / RTT (bytes/sec)
+> CongWin : dynamic, function of perceived network congestion
+
+#### TCP Fairness
+fairness goal : if K TCP sessions share same bottleneck link of bandwidth R, each should have average rate of R/K
+
+##### why is RCP fair?
+Tow competing sessions
+- additive increase give slope of 1, as throughout increase
+- multiplicative decrease decreases throughput proportionally
+> 시간이 지날수록 equal bandwidth share 그래프에 수렴한다.
+
+# 중간 정리
