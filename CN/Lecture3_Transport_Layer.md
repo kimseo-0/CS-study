@@ -1,6 +1,13 @@
 # chapter 3: Transport layer
 
 ## Intro
+> | |  |  |  | |
+> |:---:|:---:|:---:|:---:|:---:|
+> |App| | Message | | HTTP |
+> |Trans| | Segment | | TCP |
+> |Net| | Packet | | |
+> |Link| | | | |
+> |Physic| | | | |
 ???
 Transport layer 에서 기본 기능
 - multiplexing
