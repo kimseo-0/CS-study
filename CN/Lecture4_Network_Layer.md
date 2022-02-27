@@ -106,14 +106,15 @@ S : 128.119.40.186, 80, D : 10.0.0.1, 3345
 IP, mask, router, DNS 등에 대한 정보를 동적으로 가져와서 configuration 하는 protocol 
 
 ##### DHCP client-server scenario
+> DHCP - 67 port
 1. DHCP discover
-broadcast 전송, 
-67번 포트를 열고 있는 DHCP 만 해당 메세지를 받음
+broadcast 전송   
+67번 포트를 열고 있는 DHCP 만 해당 메세지를 받음   
 transaction ID : 임의의 숫자
 2. DHCP offer
-broadcast 전송
-68번 포트를 열고 있는 host만
-yiaddr : 할당할 주소 
+broadcast 전송   
+68번 포트를 열고 있는 host만   
+yiaddr : 할당할 주소
 life time 해당 주소를 사용할 수 있는 시간
 3. DHCP request
 broadcast 전송
