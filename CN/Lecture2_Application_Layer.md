@@ -4,8 +4,9 @@
 > | Host (client) |  |  |  | Host (server) |
 > |:---:|:---:|:---:|:---:|:---:|
 > |App (Process)| --- |--request--| --→ |(Process) App|
+> |             |  | HTTP |  |            |
 > |             | ←-- |--response--| --- |            |
-> |Trans| | | |Trans|
+> |Trans| | Segment | |Trans|
 > |Net| | | |Net|
 > |Link| | | |Link|
 > |Physic|-----|--⨂--|-----|Physic|
