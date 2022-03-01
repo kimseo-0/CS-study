@@ -1,5 +1,5 @@
 # chapter 1: Introduction
-# network structure
+## network structure
 - network edge
   - applications and hosts ex) desktop
 - network core
@@ -76,7 +76,7 @@ packet switching 의 동시 사용자 수의 제약이 없지만, 일정 이상 
  링크를 통해 전송되는 시간 <br>
  = length of physical link / propagation speed in medium
 
-# layer outline
+## layer outline
 > |layers Model|TCP/IP Protocol|Data|
 > |---|---|---|
 > |Application|HTTP, Web Socket|message|
