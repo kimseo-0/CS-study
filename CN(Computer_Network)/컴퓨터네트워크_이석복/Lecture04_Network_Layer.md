@@ -162,6 +162,14 @@ goal : 최단 거리 길찾기, finds least cost path
 - distance state algorithms : 이웃 네트워크에 대한 정보만 아는 경우
 
 #### link state algorithms
+전체 네트워크 정보를 알고 있는 경우 사용하는 방법으로,   
+broadcast 를 통해 다른 라우터에 대한 정보를 알아내, 
+forward table 을 만든다.
+> 그렇다면 전 세계 모든 네트워크의 라우터 정보를 알아내는 것일까?
+> 이론적으로 그렇지만, 현실적으로 불가능하기 때문에
+> 현재 관리 주체가 동일한 하나의 네트워크까지만 
+> broadcast 를 보내 forward table 을 만든다.
+
 ##### Dijkstra's algorithm
 ```
 - c(x, y) : link cost from node x to y, = ∞ if not direct neighbors
@@ -185,7 +193,93 @@ Loop
 until all nodes in N'
 ```
 
+##### 특징
 - algorithm complexity : O(N^2)
-- oscillations possible : 
+- oscillations(진동) possible : 
+라우팅 path 의 방향이 왔다 갔다 변화하는 상태가 발생할 수 있다.
 
 #### distant state algorithms
+이웃 네트워크에 대한 정보만 아는 경우
+
+##### distant vector algorithm
+```
+let 
+    dx(y) : cost of least-cost path from x to y
+then
+    dx(y) = min { c(x, v) + dv(y) }
+
+* c(x, v) : x 에서 이웃 v 까지 cost
+* dv(y) : v 에서 y 까지 cost
+```
+
+- count to infinity
+전체 큰 그림 없이 이웃 라우터에서 오는 부분적인 정보만 가지고
+cost 를 계산하기 때문에 발생한다.
+
+ex)
+만약 Y 에서 X 로 가는 최단 경로를 찾을 때,   
+cost(x, y) = cost(y, x) = 4,   
+cost(y, z) = cost(z, y) = 1,   
+cost(z, x) = cost(x, z) = 50 이라고 하자.
+
+t = 0
+
+|X  |   |   |   |Y  |   |   |   |   |Z  |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|   |X  |Y  |Z  |   |   |X  |Y  |Z  |   |   |X  |Y  |Z  |
+|X  |0  |4  |50 |   |X  |-  |-  |-  |   |X  |-  |-  |-  |
+|Y  |-  |-  |-  |   |Y  |4  |0  |1  |   |Y  |-  |-  |-  |
+|Z  |-  |-  |-  |   |Z  |-  |-  |-  |   |Z  |50 |1  |0  |
+
+t = 1
+
+|X  |   |   |   |Y  |   |   |   |   |Z  |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|   |X  |Y  |Z  |   |   |X  |Y  |Z  |   |   |X  |Y  |Z  |
+|X  |0  |4  |5  |   |X  |0  |4  |50 |   |X  |0  |4  |50 |
+|Y  |4  |0  |1  |   |Y  |4  |0  |1  |   |Y  |4  |0  |1  |
+|Z  |50 |1  |0  |   |Z  |50 |1  |0  |   |Z  |5  |1  |0  |
+
+t = 2
+
+|X  |   |   |   |Y  |   |   |   |   |Z  |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|   |X  |Y  |Z  |   |   |X  |Y  |Z  |   |   |X  |Y  |Z  |
+|X  |0  |4  |5  |   |X  |0  |4  |5  |   |X  |0  |4  |5  |
+|Y  |4  |0  |1  |   |Y  |4  |0  |1  |   |Y  |4  |0  |1  |
+|Z  |5  |1  |0  |   |Z  |5  |1  |0  |   |Z  |5  |1  |0  |
+
+이렇게 안정화 된다.
+
+이때, cost(x, y) = cost(y, x) = 50 이 된다면?
+
+```
+table Y,   
+dy(x) = min( cost(y, x) + dx(x), cost(y, z) + dz(x) )
+      = min( 50 + 0, 1 + 5 ) = 6   
+```
+table Y의 dy(x) = 6 으로 갱신되는데,
+그 결과 table Z 의 정보가 수정되면서 
+
+```
+table Z,
+dz(x) = min( cost(z, x) + dx(x), cost(z, y) + dy(x) )
+      = min( 50 + 0, 1 + 6 ) = 7
+```
+table Z의 dz(x) = 7 로 갱신되고,
+그 결과 다시 table Y의 dy(x) = 8 로 갱신 되면서
+핑퐁 현상이 발생하게 된다.
+
+해당 문제는 이미 table Y 에서 dy(x) 는 table Z 에서 만들어진 dz(x) 를 이용하고,
+table Z 에서 dz(x) 는 table Y 에서 만들어진 dy(x) 를 이용하기 때문이다.
+
+이런 상황일 경우, table Z 에서 Y 로 dz(x) 를 ∞ 로 전달하면 된다.
+( 단, 관계성이 없는 table X 로는 원래 값을 전달한다. )
+
+
+
+
+
+
+
+
