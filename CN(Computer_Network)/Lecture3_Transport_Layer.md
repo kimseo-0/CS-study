@@ -10,7 +10,7 @@
 > |Physic| | | | |
 ???
 Transport layer 에서 기본 기능
-- multiplexing
+- multiplexing``
 - error checking
 ???
 
@@ -56,7 +56,6 @@ sequence 정보도 최소화 한다
 ### 2.2 a NAK-free
 ACK(seq#)을 보냄
 이때 seq#은 마지막으로 제대로 받은 패킷의 seq#
-
 ### 3.0 channel loss & packet error
 - Timer
 : 일정 timer 동안 feedback 이 없으면 재전송 
@@ -225,5 +224,3 @@ Tow competing sessions
 - additive increase give slope of 1, as throughout increase
 - multiplicative decrease decreases throughput proportionally
 > 시간이 지날수록 equal bandwidth share 그래프에 수렴한다.
-
-# 중간 정리

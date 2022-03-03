@@ -23,7 +23,7 @@
 ### IP datagram format
 - source IP address : 출발 IP 주소
 - destination IP address : 목적지 IP 주소
-- time to live : 라우터를 거칠 때 마다 -1, 0이 되면 패킷을 폐기
+- time to live (TTL) : 라우터를 거칠 때 마다 -1, 0이 되면 패킷을 폐기
 - upper layer : TCP 인지 UDP 인지 명시
 
 > overhead   
@@ -126,8 +126,66 @@ transaction ID + 1
 > 여러가지 기능 포함
 
 ### IP fragmentation, reassembly
+packet 을 조각내고 다시 합치기 위한 패킷 header field
 - length : 전체 길이
 - id : 패킷 id
 - fragflag : 뒤에 연결될 패킷이 있는가 없는가
 - offset : 기존 데이터에서 어느 위치에 해당하는가( 앞의 데이터 길이 / 8)
 
+### Internet Control Message Protocol ( ICMP )
+network 자체에서 생성하는 메세지를 운반하기 위한 프로토콜   
+ex) TTL 이 0이 되면서 패킷이 드랍되었을 경우,
+패킷이 드랍되었음을 source router 에게 알리기 위해 메세지를 전송할 필요가 있음
+
+### IPv6
+#### IP datagram format
+source/destination address : 128bits
+
+#### Tunneling
+IPv4 에서 IPv6 로 넘어갈 경우 
+과도기에 어떤식으로 IPv6 형태의 패킷을
+IPv4 라우터가 이해할 수 있게 할까?   
+IPv4 포맷의 패킷 데이터로 IPv6 패킷을 집어넣어 전달한다.
+
+## Routing Algorithm
+forwarding table 작성에 사용되는 알고리즘
+
+### Graph abstraction
+graph : G = (N, E)
+N = set of routers
+E = set of links
+
+goal : 최단 거리 길찾기, finds least cost path
+
+### Routing algorithm classification
+- link state algorithms : 전체 네트워크 정보를 아는 경우
+- distance state algorithms : 이웃 네트워크에 대한 정보만 아는 경우
+
+#### link state algorithms
+##### Dijkstra's algorithm
+```
+- c(x, y) : link cost from node x to y, = ∞ if not direct neighbors
+- D(v) : current value of cost of path from source to v, source 에서 v 까지 최단 경로
+- N' : set of nodes whose least cost path definitively known, 
+
+Initialization:
+    N' = {u}
+    for all nodes v
+    if v adjacent to u # u에 인접한 v
+        then D(v) = c(u, v)
+    else D(v) = ∞
+
+Loop
+    find w not in N' such that D(w) is a minimum
+    add w to N'
+    update D(v) for all v adjacent to w and not in N' :
+        D(v) = min(D(v), D(w) + c(w, v)
+    /* new cost to v is either old cost to v or know
+    shortest path cost to w plus cost from w to v */
+until all nodes in N'
+```
+
+- algorithm complexity : O(N^2)
+- oscillations possible : 
+
+#### distant state algorithms

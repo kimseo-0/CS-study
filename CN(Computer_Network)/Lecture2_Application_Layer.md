@@ -15,7 +15,6 @@
 - server
 - client
 
-
 ## HTTP (Hypertext Transfer Protocol)
 - request/response
 
