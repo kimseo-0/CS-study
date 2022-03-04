@@ -93,6 +93,8 @@ int socket (int domain, int type, int protocol);
 ```
 int bind (int sockfd, struct sockaddr* myaddr, int addrlen);
 ```
+client 의 경우 정해진 특정 포트에 연결할 필요가 없기 때문에
+bind 를 할 필요가 없다.
 
 - `Listen`
 put socket into passive state (wait for connection)
@@ -103,9 +105,15 @@ backlog : bound on length of unaccepted connection queue,
 동시에 여러개의 request가 들어왔을때 최대 backlog 만큼 큐에 담아서 처리
 ```
 
-- `Accetp` a new connection
+- `Accept` a new connection
 accept 실행시 block,
-client 로 부터 요청이 오면 
+client 로 부터 요청이 오기를 기다림
 ```
 int accept (int sockfd, struct sockaddr* cliaddr, int* addrlen);
+* Return
+- cliaddr: IP address and port number of client, 
+요청이 들어온 client IP 주소를 리턴함
 ```
+
+#### Sending and Receiving Data
+
