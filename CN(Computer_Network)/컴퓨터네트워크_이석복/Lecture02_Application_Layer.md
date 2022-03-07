@@ -116,4 +116,17 @@ int accept (int sockfd, struct sockaddr* cliaddr, int* addrlen);
 ```
 
 #### Sending and Receiving Data
+- `Write` data to a stream
+```
+int write(int sockfd, char* buf, size_t nbytes);
+```
+
+- `Read`
+
+#### Tearing Down a Connection
+- `Close`
+```
+int close(int sockfd);
+```
+
 
