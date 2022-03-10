@@ -1,5 +1,5 @@
-# chapter 3: Network layer
-## Intro
+# chapter 4: Network layer
+## 4.1-4.3 Intro
 > | |  |  |  | |
 > |:---:|:---:|:---:|:---:|:---:|
 > |App| | Message | | HTTP |
@@ -19,7 +19,7 @@
 #### Longest prefix matching
 가장 많이, 길게 match 하는 entry 선택
 
-## IP : Internet Protocol
+## 4.4 IP : Internet Protocol
 ### IP datagram format
 - source IP address : 출발 IP 주소
 - destination IP address : 목적지 IP 주소
@@ -147,7 +147,7 @@ IPv4 에서 IPv6 로 넘어갈 경우
 IPv4 라우터가 이해할 수 있게 할까?   
 IPv4 포맷의 패킷 데이터로 IPv6 패킷을 집어넣어 전달한다.
 
-## Routing Algorithm
+## 4.5 Routing Algorithm
 forwarding table 작성에 사용되는 알고리즘
 
 ### Graph abstraction
@@ -273,13 +273,57 @@ table Z의 dz(x) = 7 로 갱신되고,
 해당 문제는 이미 table Y 에서 dy(x) 는 table Z 에서 만들어진 dz(x) 를 이용하고,
 table Z 에서 dz(x) 는 table Y 에서 만들어진 dy(x) 를 이용하기 때문이다.
 
-이런 상황일 경우, table Z 에서 Y 로 dz(x) 를 ∞ 로 전달하면 된다.
+그러므로 다음과 같이 사이클이 발생하는 상황을 막아한다.
+table Z 에서 Y 로 dz(x) 를 ∞ 로 전달하면 된다. > poison reverse
 ( 단, 관계성이 없는 table X 로는 원래 값을 전달한다. )
 
+#### hierarchical routing
+거대한 네트워크에서 link state 를 사용하는 것은 비현실적이다.
+이럴 때 > `계층`을 활용한다.
 
+계층에 따라 맞는 라우팅 알고리즘을 사용한다.
 
+- Autonomous System(AS) : 하나의 네트워크 지역에 대해서 운영자가 자치적으로 라우팅 알고리즘을 선택하는 시스템
+    - Inter-AS routing : AS 내부 라우팅 ex) 캠퍼스
+    - intra-AS routing : AS 사이의 라우팅, 
+        단순히 효율성만 따지는 것이 아니라, 외교적, 정치적 상황까지 고려할 수 있어야 한다.
 
+## 4.6 Routing in the Internet
+- RIP - distance vector algorithm
+- OSPF - link state algorithm
+- BGP - intra-AS algorithm
 
+### Autonomous System(AS)
+- 자치권을 가진 라우팅 도메인
+- AS number(고유 번호)를 받는다.
 
+### Relationships Between Networks
+#### Customers and Providers
+- Provider : 인터넷 연결을 제공하는 AS ex) SKT, KT
+- Customer : 인터넷 연결을 제공받는 AS
+customer pays provider for access to the internet
 
+#### Peering Relationship
+서로 인터넷에 있어 대등한 관계 ex) SKT and KT
 
+peers provide transit between their respective customers
+* peers do not provide transit between peers
+* do not exchange money
+
+A - B - C
+A - B, B - C 가 서로 peer 관계일때,
+A가 B를 통해 B의 customer 에게 인터넷을 제공하는 것은 가능하지만
+A가 B를 거쳐 C의 customer 에게 인터넷을 제공하는 것을 불가능하다.
+B를 거치지만 B에게 돌아오는 금전적 이득이 없기 때문이다.
+
+### Implementing Inter-Network Relationships with `BGP`
+#### BGP-4
+- BGP = Border Gateway Protocol
+- Policy-Based routing protocol   
+효율성, cost 보다는 정책에 따른 라우팅
+- routing order preference : customer > peer > provider 
+(금전적 이득이 크고, 금전적 손실이 적은 경우를 선택)
+
+##### ASPATH Attribute
+- prefix originated
+- AS Path : 거쳐온 모든 AS 들의 번호를 저장함
