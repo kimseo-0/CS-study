@@ -62,9 +62,10 @@
 
 ### Cloud Computing Economics
 기존 전용 컴퓨터를 활용한 호스팅보다 cloud computing 을 활용했을 때 더 효율 적인 상황
-- demand for a service varies with time
-- demand is unknown in advance
+- demand for a service varies with time : 서비스 자체의 변화가 시시 때때로 발생할 때
+- demand is unknown in advance : 시장의 반응을 예측하기 어려운 때
 - organization that perform batch analytics can user the "cost associativity" of cloud computing to finish computations faster
+많은 양의 클라우드를 활용하여 한번에 많은 것을 단기간에 처리할 때
 
 ### Components of Cloud Computing
 - Five Essential Characteristics of Cloud Computing
@@ -72,16 +73,42 @@
 - Four deployment models
 
 #### Five Essential Characteristics of Cloud Computing
-- on-demand self-service
-- Broad network access
-- Resource pooling
-- Rapidly elasticity
-- Measured service
+클라우드 컴퓨팅의 5가지 특징
+- on-demand self-service : 필요할 때 필요한 만큼 사용 가능
+- Broad network access : 언제 어디서든 접근 가능
+- Resource pooling : 한정된 자원을 효율적으로 활용
+- Rapidly elasticity : 최대한 빠르게, 즉각적으로 활용
+- Measured service : 정확한 계산
+
 ##### on-demand self-service
+'사람의 개입 없이' 자동화 되어있는 인터페이스를 통해서 
+필요한 자원 요청, 요청한 자원에 대해서 자동적으로 제공
+
 ##### Broad network access
+빠른 네트워크, 데이터 센터 밖과 안의 네트워크, 데이터 센터 내부의 네트워크
+
 ##### Resource pooling
+- resources are pooled together 
+to serve multiple customers using a multi-tenant model   
+여러명의 사용자에게 자원 풀에서 multiple 하게 자원 제공
+- virtual and physical resources are 'dynamically' 
+assigned and reassigned based on 'need and customers' demands'   
+사용자의 수요에 따라 다이나믹하게 제공되는 자원의 양이 변화할 수 있음
+
 ##### Rapidly elasticity
+'resources and capabilities' can be 'quickly and automatically'
+deployed and scaled 'at any quantity and at any time'.   
+어떤 양이든 어떤 시간이든 빠르고 자동적이고, 즉각적으로 자원 제공이 이루어져야함 
+
+> over provisioning for peak load / under provisioning 그래프 `그림`   
+> 자원이 낭비되거나, 예상치보다 더 많은 양의 자원이 필요해서 시스템이 마비되는 상황   
+> ex) 수강신청 기간
+> *peak load : 가장 많은 자원을 쓸때 필요한 자원의 양
+
 ##### Measured service
+customer usages of resources and service
+'automatically monitored, controlled and reported'   
+사용자들이 사용한 자원 및 서비스에 대해서 자동적으로 모니터링하고, 금액을 계산한다.
 
 #### Service Models
 - Software as a Service (SaaS)
@@ -89,18 +116,80 @@
 - Infrastructure as a Service (IaaS)
 
 ##### Software as a Service (SaaS)
+- ready to user application ex) G-mail, google docs, youtube...   
+cloud infrastructure 위에서 돌아가는 application 서비스를 사용자들에게 제공한다.
+
+- accessible from various client devices   
+다양한 사용자 디바이스(인터페이스, 웹 브라우저, 프로그램)등을 통해 접근 사용 가능하다.
+- consumer does not manage or control the underlying 'cloud infrastructure'
+network, server, operating system, storage > 
+기본 컴퓨팅 자원들을 포함한 , 밑바닥에서 어떤식으로 작동하는지 관심을 가질 필요가 없다.
+
 ##### Platform as a Service (PaaS)
+- ready to use tools ex) Google apps engine
+- 개발에 필요한 서비스를 제공 받는다.
+- programming languages, libraries, tools
+
+- consumer does not manage or control the underlying 'cloud infrastructure'
+network, server, operating system, storage > 
+기본 컴퓨팅 자원들을 포함한 , 밑바닥에서 어떤식으로 작동하는지 관심을 가질 필요가 없다.
+- consumer has control over the deployed application and
+possibly configuration setting for the application-hosting environment > 
+개발자가 개발하는 본인의 서비스에 대한 개발 환경 등에 대해서 알 필요가 있다.
+
+- 특정 분야에 대한 기술을 가진 회사가 해당 기술을 서비스로 제공하는 경우가 많다.
+    - container as a service : docker, kubernetes
+    - function as a service : AWS Lambda, google cloud platform
+    - bigdata processing : spark, hadoop
+
 ##### Infrastructure as a Service (IaaS)
+- fundamental computing resources : cpu, disk, network 등 밑바닥이 되는 기본 자원들
+ex) Amazon EC2, S3, Window Azure
+- 본인의 서비스를 running 하기위한 cloud infrastructure 를 제공 받는다.
+- to user the provider's applications running on a cloud infrastructure.
+
+- consumer does not manage or control the underlying 'cloud infrastructure' > 
+밑바닥에서 어떤식으로 작동하는지, 가상 컴퓨터에서 어떤식으로 자원을 빌려주는지에 대해서 관심을 가질 필요가 없다.
+- consumer has control over operating systems, storage, deployed application
 
 #### Deployment Models
+- private cloud : 조직 내부에서 사용하기 위한 cloud
+- community cloud 
+- public cloud : 외부에 빌려주기 위한 cloud
+- hybrid cloud 
+
+##### private vs public
+서로의 장점이 단점이 될 수 있다.
 - private cloud
-- community cloud
+    - most secure : 조직, 회사 내부에서만 이용하기 때문에 보안에 좋다.
+    - good performance : 조직, 회사에서 필요한 맞춘 서비스를 제공할 수 있다.
+    - high relability : 조직 내부에서 관리하기 때문에 신뢰도가 높다
 - public cloud
-- hybrid cloud
+    - pay as you go : 사용한만큼만 돈을 낼 수 있음
+    - high scalability : 많은 컴퓨터 자원, 큰 규모
 
 ##### private cloud
+- 하나의 조직, 기관만 사용할 수 있도록 제한
+- 조직이 관리하고, 소유한 cloud 서비스
+> 작은 조직의 경우 감당하기 어려울 가능성이 높다.
+
 ##### community cloud
+private cloud + public cloud
+- 자신의 private cloud 가 있고,
+특정한 커뮤니티, 조직들의 모임 내에서 각자의 cloud 를
+public cloud 로 공유하여 사용
+
 ##### public cloud
+- 돈을 대가로 또는 무료로 누구나 사용 가능한 cloud
+- 정부나, 큰 회사 조직 등에서 관리 > 자체 보유 전산실 서버 운영 및 관리
+
 ##### hybrid cloud
+private cloud / public cloud 의 중간
+- 기본적으로 private cloud 를 사용하다가, 일시적으로 많은 컴퓨터 자원이 필요할 때,
+public cloud 를 빌려서 사용 
+
+### Obstacles & Opportunities
+클라우드 컴퓨팅의 위험요소와 해결 방안
+1. availability
 
 ## Reading Articles :
