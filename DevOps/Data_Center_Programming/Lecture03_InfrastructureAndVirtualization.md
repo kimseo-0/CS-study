@@ -157,5 +157,7 @@ App 을 새로운 버전으로 업그레이드 하고싶다면,
 하나의 이미지, 소스코드만 유지하면 되기 때문에, 여러 버전이 꼬이고 문제가 발생하는 것을 미연에 방지 가능
 
 ### Reading Articles
-- What is a container?
+- What is a container? : 
+https://www.docker.com/resources/what-container
 - Docker: a Software as a service, Operating System-level virtualization framework
+https://journal.code4lib.org/articles/9669?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed:+c4lj+
