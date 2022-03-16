@@ -190,6 +190,25 @@ public cloud 를 빌려서 사용
 
 ### Obstacles & Opportunities
 클라우드 컴퓨팅의 위험요소와 해결 방안
-1. availability
+1. availability : 하나의 public cloud 를 믿을 수 있는가?(만약 그 회사가 망한다면?)
+2. data lock-in : 하나의 public cloud 에 종속되어서 다른 cloud 서비스로 이동하는 것이 어려움
+3. data confidentiality and auditability : cloud 회사의 보안을 믿을 수 있는가?
+4. data transfer bottlenecks : 통신이 원활한가? 통신 bottleneck 으로 인해 너무 많은 지연이 발생한다면?
+5. performance unpredictability : 일정 수준 이상의 좋은 성능을 보장하는가?
+6. scalable storage : 저장공간을 필요할때 즉각적으로 늘릴 수 있는가?
+7. bugs in large distributed systems : 버그, 에러 없이 잘 실행되는가?
+8. scaling quickly : 저장 공간의 빠른 확장 축소 
+9. reputation fate sharing : 공유해서 자원을 사용하는 것을 신뢰할 수 있는가?
+10. software licensing : 비용과 라이센스에 대한 문제는 없는가?
 
-## Reading Articles :
+### Issues in cloud computing
+- security
+- reliability
+- privacy
+- legal
+- migration from legacy systems
+- disaster recovery
+
+## Reading Articles : virtualization
+- virtualization by VMWare : https://www.vmware.com/solutions/virtualization.html
+- Xen and the Art of virtualization : https://cse.buffalo.edu/~stevko/courses/cse704/fall10/papers/2003-xensosp.pdf
