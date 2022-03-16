@@ -7,9 +7,9 @@
 - What are the obstacles to and opportunities for growth of cloud computing?
 - What are the issues of cloud computing?
 
-
 ## Course
 ### Google Global Datacenters
+
 ### Cloud Computing Concept
 - Infrastructure : compute, block storage, network
 - Platform : 소프트웨어들, 주로 개발자가 사용하는 시스템 ex) object storage, database
