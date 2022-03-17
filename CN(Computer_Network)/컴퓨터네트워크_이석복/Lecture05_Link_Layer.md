@@ -141,27 +141,31 @@ CD가 발생했는가 안했는가만을 가지고 재전송 여부를 결정할
 Is it possible that :   
 A collision happens in Ethernet But is not detected at the MAC layer?   
 충돌이 발생했지만 발견되지 않는다면?    
-> 발생해서는 안된다. 
-> 하지만, 위와 같은 상황이 발생할 수 있다.
->   
-> A - B - C - D - E , 5개의 호스트가 있을 때,   
-> A 에서 데이터를 전송하면 A > B > C > D 를 지나 E 로 향하는데 E 에 도달하기 직전,   
-> E 에서는 아직 아무것도 듣지 못했기 때문에 데이터 전송이 가능하다. 
-> E 에서 그 순간 데이터를 전송하고, 직후 A 에서 전송한 데이터가 E에 다다르면 collision detection 으로
-> E 에서 바로 데이터 전송을 중단한다.   
-> E 에서 데이터 전송을 중단해도, 이미 전송된 데이터는 C > B 를 지나 A 로 향하는데 A 에 도달하기 직전,
-> A 에서 전송할 데이터가 더이상 없다면, E 에서 보낸 데이터가 A 에 도달했을 때,   
-> collision detection 이 이루어지지 않는다.   
-> 하지만, A 에서 전송한 데이터는 E 에서 보낸 데이터와 충돌로 인해 사용할 수 없는 데이터이며,
-> 재전송이 필요하다.
->   
-> 위와 같은 상황이 발생할 수 있기 때문에 해결방법이 필요함
->
-> 근본적으로 propagation delay 로 인한 문제이지만, 전송 속도를 변경하는 것은 불가능(빛의 속도이므로)   
-> A 의 전송 데이터를 길게 만드는 방법을 선택
->
-> minimum frame size 를 64 bit 로 강제한다. 만약 실질적으로 보낼 데이터가 1 bit 라면
-> 나머지 63 bit 에 패딩을 주어 64 bit 로 사이즈를 맞춰서 전달한다. 
+
+발생해서는 안된다. 
+하지만, 위와 같은 상황이 발생할 수 있다.
+   
+A - B - C - D - E , 5개의 호스트가 있을 때,   
+A 에서 데이터를 전송하면 A > B > C > D 를 지나 E 로 향하는데 E 에 도달하기 직전,      
+E 에서는 아직 아무것도 듣지 못했기 때문에 데이터 전송이 가능하다.
+ 
+E 에서 그 순간 데이터를 전송하고, 직후 A 에서 전송한 데이터가 E에 다다르면 collision detection 으로
+E 에서 바로 데이터 전송을 중단한다.
+
+E 에서 데이터 전송을 중단해도, 이미 전송된 데이터는 C > B 를 지나 A 로 향하는데 A 에 도달하기 직전,   
+A 에서 전송할 데이터가 더이상 없다면, E 에서 보낸 데이터가 A 에 도달했을 때,   
+collision detection 이 이루어지지 않는다.   
+
+하지만, A 에서 전송한 데이터는 E 에서 보낸 데이터와 충돌로 인해 사용할 수 없는 데이터이며,
+재전송이 필요하다.
+  
+위와 같은 상황이 발생할 수 있기 때문에 해결방법이 필요함
+
+근본적으로 propagation delay 로 인한 문제이지만, 전송 속도를 변경하는 것은 불가능(빛의 속도이므로)   
+A 의 전송 데이터를 길게 만드는 방법을 선택
+
+minimum frame size 를 64 bit 로 강제한다. 만약 실질적으로 보낼 데이터가 1 bit 라면
+나머지 63 bit 에 패딩을 주어 64 bit 로 사이즈를 맞춰서 전달한다. 
 
 ### Addressing ARP
 #### MAC addresses and ARP
@@ -180,7 +184,7 @@ GWR IP address 는 네트워크 계층에서 DHCP 로 이미 알고 있는 정�
 - IP address 와 매칭하는 Mac address 을 나열한 테이블
 
 |IP add|MAC add|TTL|
-|---|---|---|
+|:---:|:---:|:---:|
 |GWR IP|GWR MAC|2|
 > *TTL : 유효 시간
 
@@ -189,7 +193,7 @@ GWR IP address 는 네트워크 계층에서 DHCP 로 이미 알고 있는 정�
 - gate way router 의 IP 를 담은 ARP request 를 broadcast 하면,
 해당 IP 주소와 동일한 host 에 도달하면, 자신의 MAC address 담아서 response 를 돌려 보낸다.
 
-#### scenario : IP packet & MAC frame transfer
+#### scenario : routing to another LAN
 1. IP packet  = [source address, distance address]   
 forwarding table 에서 distance address IP 주소로 데이터를 전송하기 위한 next IP 주소를 가져옴
 2. IP packet 을 frame 으로 감싼다. 
@@ -204,3 +208,127 @@ MAC distance address 에 기입한다.
 > NO,
 > 같은 라우터라도, 데이터가 들어오는 인터페이스와 데이터가 나가는 인터페이스가 다르기 때문에,
 > 두 address 는 다르다.
+
+### switch
+- collision domain : domain 을 분리 시켜 교통정리 해주는 역할을 한다.
+- 네트워크 관점에서 switch 는 없다고 생각한다.
+
+|A|1↘| |↙2|B|
+|---|---|---|---|---|
+|C|3→|switch|←4|A'|
+|B'|5↗| |↖6|C'|
+- A-to-A' 과 B-to-B' 로 충돌 없이 데이터를 동시에 전송할 수 있다.
+- A-to-A' 과 B-to-A' 로 데이터를 전송하는 경우 스위치 내부에서 교통정리를 통해
+A 에서 전송하는 데이터와, B 에서 전송하는 데이터를 충돌 없이 A' 으로 전송한다.
+
+그렇다면, A-to-A' 데이터 전송을 한다고 할때, A' 이 switch 의 어떤 포트(구멍)인지 알아야 한다.
+> switch table 을 통해 알 수 있다.
+
+#### switch table
+|destination MAC|output|TTL|
+|:---:|:---:|:---:|
+|A'|4|2|
+> *TTL : 유효 시간
+
+그렇다면, switch table 은 어떻게 채울까?/
+> self-learning 을 통해 할 수 있다.
+
+#### self-learning
+A-to-A' 으로 데이터를 전송할 때
+1. switch table 이 비어 있으면 flooding
+2. A 의 포트 정보를 switch table 에 저장
+> flooding : 스위치에 연결된 모든 링크로 데이터 전송
+
+- 시간이 지나면서 switch table 이 채어짐
+
+#### Interconnecting switches
+- 스위치에 스위치를 연결할 수 있다.
+
+##### multi self-learning example
+|A|1 ↘| | | |↙ |D|
+|---|---|---|---|---|---|---|
+|C|2 →|switch1|0 ↔ 0|switch2|←|E|
+|B'|3 ↗| | | |↖|F|
+
+- Q1 : A-to-F
+
+> switch 1 table
+> 
+> |destination MAC|output|TTL|
+> |:---:|:---:|:---:|
+
+switch 1 에서 데이터를 받으면,   
+switch 1 table 이 비어 있으므로 flood,   
+switch 1 table 에 A 에 대한 포트 정보 입력
+
+> switch 1 table
+>
+> |destination MAC|output|TTL|
+> |:---:|:---:|:---:|
+> |A|1|60|
+
+B, C 로 간 데이터는 drop,   
+switch2 에서 데이터를 받으면,  
+
+> switch 2 table
+>
+> |destination MAC|output|TTL|
+> |:---:|:---:|:---:|
+
+switch 2 table 도 비어 있으므로 flood,   
+switch 2 table 에 A 에 대한 포트 정보 입력
+
+> switch 2 table
+>
+> |destination MAC|output|TTL|
+> |:---:|:---:|:---:|
+> |A|0|60|
+
+D, E 로 간 데이터는 drop,   
+F 로 데이터 도착
+
+- Q1 : F-to-A
+
+switch2 에서 데이터를 받으면,
+> switch 2 table
+>
+> |destination MAC|output|TTL|
+> |:---:|:---:|:---:|
+> |A|0|60|
+
+A 에 대한 정보가 table 에 있으므로   
+포트 0 으로 데이터 전송
+
+switch 1 에서 데이터를 받으면,
+
+> switch 1 table
+>
+> |destination MAC|output|TTL|
+> |:---:|:---:|:---:|
+> |A|1|60|
+
+A 에 대한 정보가 table 에 있으므로   
+포트 1 으로 데이터 전송   
+A 에 데이터 도착
+
+#### Institutional network
+
+##### switch vs router   
+- switch 
+    - link-layer device
+    - 여러개의 host 들의 데이터 전송에 대한 교통정리를 해주는 역할만을 가지고 있다.
+    - 네트워크의 관점에서는 없는 취급한다.
+    - flooding(self-learning) 을 통해 MAC address table 을 작성한다. 
+
+- router
+    - network-layer device
+    - 라우팅 알고리즘을 통해 IP Address table 을 계산한다.
+    - IP 주소를 가지고 있다.
+
+> 공유기   
+> 공유기는 하나의 컴퓨터로
+> Application, transport, network, link layer 에서 발생하는 여러가지 프로토콜 및 작업을 수행한다.   
+> 즉, 라우팅을 하는 하나의 router 로 IP 주소를 가지고 있다.
+
+## 5.6 data center networking
+엄청나게 많은 서버들을을 쌓고 가장 위에 스위치로 연결 하고 상위 스위치에 연결...연결 계층화 하여 관리
