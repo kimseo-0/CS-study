@@ -86,16 +86,16 @@ forward table 에서 일치하는 entry 들 중 prefix 가 가장 긴 것 선택
 네트워크 내부에서 외부로 패킷을 전송할 때,
 gateway router 에서 IP 주소를 자기 자신의 router IP 주소로 변경 (rewrite the src IP)
 
-> NAT translation table 
+> NAT(Network Address Translation) translation table 
 > 
 > | | |
 > |:---:|:---:|
-> | WAN side addr | LAN side addr |
+> | WAN side address | LAN side address |
 > | 138.76.29.7, 5001 | 10.0.0.1, 3345 |
 
 ##### scenario
 1. S : host 10.0.0.1, D : send 128.119.40.186, 80
-2. NAT router chages datagram source addr
+2. NAT router changes datagram source address
 S : gate router 138.76.29.7, 5001, D : send 128.119.40.186, 80
 3. reply arrives
 S : 128.119.40.186, 80, D : 138.76.29.7, 5001
