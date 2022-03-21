@@ -119,3 +119,96 @@ focus cues 에 의해서는 눈과 실제 스크린과의 거리는 고정되어
 ##### IMPROVING DEPTH PERCEPTION IN VR
 
 #### IMMERSIVE visual display
+##### HMD basic principles
+- 시야각을 넓히는 것
+- 해상도를 높이는 것
+
+핵심 부품
+- lens
+    - Field of view : 시야각
+    - occularity, interpupillary distance : 사람마다 눈사이 거리가 다름, 그걸 조절할 수 있는가? (HW, SW )
+    - eye relief, eye box : 기계가 흔들리더라도, 눈이 편안한 상태에서 화면을 선명하게 잘 볼 수 있는가
+- display
+    - 해상도
+    - 전원, 밝기
+- Ergonomics
+    - size, weight
+    - wearability
+> 각각의 요소가 서로 trade off 관계를 가지기도 함 ex) eye box and size : eye box 가 크려면 렌즈 사이즈가 커야함
+
+핵심 요소
+- Field of view
+    - 넓은 시야각은 HMD 몰입감의 핵심
+    - 크고 높은 해상도의 LCD 디스플레이, 곡률이 큰 렌즈일수록 시야각이 넒어짐
+    - trade off
+        - LCD 와 큰 렌즈는 HMD 전체 크기를 크게 하여 사용성 저하
+        - 곡률이 큰 렌즈는 무겁고 더 큰 광학 왜곡 발생
+    - 측정법 : 수평, 수직, 대각선 으로 측정
+        - Monocular FOV
+        - Total FOV
+        - Binocular(or stereoscopic) FOV
+
+- Ocularity
+    - Monocular : HMD image to only one eye.
+    - Bioccular : Same HMD image to both eyes.
+    - Binocular (stereoscopic) : Different but matched images to each eye
+    
+- Distortion in lens optics
+HMD optics distort images shown in them
+
+왜곡 함수를 만들어서 역함수를 구해서 컨텐츠 자체를 역함수에 넣은 화면을 띄운다.
+실제로 사용자가 보기에는 찌그러지지 않은 원 컨텐츠 그대로 보인다.
+
+> 6DOF : 앞/뒤, 위/아래, 왼쪽/오른쪽
+
+- THREE TYPES OF GRAPHICS RENDERING MODULE IN HMD
+- 별도의 컴퓨터에서 수행하고 HMD 는 컴퓨터와 붙어있는 형태
+    - 렌더링 성능 높음
+    - 움직임이 자유롭지 못함
+    - 개발에 사용
+- 뷰어 형태의 HMD 에 스마트폰을 끼워 렙더링 수행
+    - 쉽게 사용 가능, 각격이 쌈 
+    - 렌더링 성능이 핸드폰 성능에 따라 다름, 일반적으로 낮은 서능
+    - 머리 회전만 트래킹 가능
+    - 제자리에서 머리 회전만 사용하는 어플리케이션에 적합
+- Stand-Alone 으로 HMD 내부에서 렌더링 수행
+    - GPU 발전으로 성능 + 사용성 모두 잡았으나 가격이 비쌈
+
+- PIXEL DENSITY COMPARISON
+Pixel vs horizontal field of view   
+시야각에 따른 적정 픽셀( 사용자가 픽셀을 느끼지 못할 정도의 해상도)
+
+- PROBLEMS STILL EXIST
+    - Confliction between Accommodation cue and Vergence cue
+    ∴ Major cause of cyber/VR sicknes
+
+    - 동시에 여러 사람이 HMD 를 사용한 프로그램을 사용할 때 렌더링이 동시에 잘 되고, 싱크가 맞아야함
+
+##### CAVE
+각 면과 면 사이이에 선이 보이면 몰입도가 깨짐
+- 선이 보이는 상황
+    - 각 면의 업데이터 싱크가 맞지 않을 때
+    - 각 화멵이 연결되어야함
+    
+##### STEREO PROJECTION
+- Active stereo   
+왼쪽 오른쪽 그림을 반복, 안경을 왼쪽 화면이 보일때 오른 눈을 가림
+    - 단점 
+        - 한눈으로만 화면을 보기때문에 화면 밝기가 떨어져 어두움
+        - 화면의 전환이 자주 이루어지기 때문에 디스플레이 성능이 맞아야함
+
+- Passive stereo
+각 눈에 각각 수직방향/수평방향 or 왼쪽 원형/오른쪽 원형 편광을 적용
+    - 단점
+        - 해상도가 반으로 준다
+        - 편광 필터의 효율이 100%가 아니라 잔광이 발생
+        
+### HAPTIC FEEDBACK
+#### HUMAN HAPTIC SYSTEM
+손에 너무 많은 종류의 신호, 자극이 들어오기 때문에 몰힙형 디스플레이로 구현하는 것이 매우 어렵다.
+
+#### Toch
+- Mechanoreceptors: Detect pressure, vibrations & texture
+- Thermoreceptors: Detect hot/cold
+- Nocireceptors: Detect pain
+- Proprioreceptors: Detect spatial awareness
