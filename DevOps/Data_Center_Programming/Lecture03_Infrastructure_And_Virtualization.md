@@ -133,7 +133,7 @@ IF, on premise...
 
 ### Mutable and immutable infrastructure
 #### Mutable infrastructure > pets model
-- 목적에 띠라 업데이트, 패치가 가능하다.
+- 목적에 따라 업데이트, 패치가 가능하다.
 - 계속 업데이트와 패치가 이루어지면 다양하고 unique 한 버전과 형태의 서비스가 존재함
 - 다양한 버전들로 인해 문제 진단 및 해결이 어려움
 
@@ -156,7 +156,7 @@ App 을 새로운 버전으로 업그레이드 하고싶다면,
 - there is no need to track changes : 관리가 쉬워짐, 한 서비스에 대해서는 
 하나의 이미지, 소스코드만 유지하면 되기 때문에, 여러 버전이 꼬이고 문제가 발생하는 것을 미연에 방지 가능
 
-### Reading Articles
+## Reading Articles
 - What is a container? : 
 https://www.docker.com/resources/what-container
 - Docker: a Software as a service, Operating System-level virtualization framework
