@@ -1,0 +1,43 @@
+# Lecture 05 - Docker Introduction
+
+## Quick Review of Reading Articles
+
+## Today's Reading Articles
+
+## Course
+### Docker
+Container Technologies 중 하나이며,
+다양한 OS 를 지원한다.
+
+#### What is Docker?
+- open platform : 거의 대부분의 플랫폼 위에서 사용 가능
+- separate your applications from your infrastructure
+    - deliver software quickly
+    - os, cpu 등 infra 에 관계 없이 애플리케이션을 짤 수 있다.
+- infrastructure as code : 애플리케이션에 필요한 OS, 필요한 모듈들을 
+프로그래밍 하듯이 코드로 짜면 빠른시간 안에 자동화된 방법으로 동작
+∴ 프로그램의 개발, 시험, 운영에 있어서 지연을 최소화 하고, 그 과정을 빠르게 하는 것을 목표로 한다.
+(a.k.a DevOps)
+
+#### Why user Docker
+
+
+- Flexible
+- Lightweight
+- Interchangeable
+
+#### Docker terms
+##### Docker Image
+image is an executable package including everything needed to run an application
+
+##### Docker Container
+- container is a runtime instance of an image
+- the image becomes a container in memory when executed
+- you can see a list of your running containers with the command, 
+docker ps, just as you would in Linux.
+
+##### Dockerfile, Image, Container & CLIs
+
+#### Sharing Immutable Infrastructures
+
+### Trouble Shooting
