@@ -104,6 +104,10 @@ S : 128.119.40.186, 80, D : 10.0.0.1, 3345
 
 #### Dynamic Host Configuration Protocol ( DHCP )
 IP, mask, router, DNS 등에 대한 정보를 동적으로 가져와서 configuration 하는 protocol 
+- IP address
+- subnet mask
+- Gateway Router IP
+- Name Server IP
 
 ##### DHCP client-server scenario
 > DHCP - 67 port
