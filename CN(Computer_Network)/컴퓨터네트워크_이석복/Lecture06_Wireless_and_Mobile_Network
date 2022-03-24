@@ -6,29 +6,300 @@
 이번 챕터는 무선 및 모바일 상황에서 Link layer 에 대한 이야기를 다룬다.
 
 ## 6.1 Intro
-
 ## Wireless
 ### 6.2 Wireless links
-#### 특징
-- wired link, 유선 인터넷과의 차이점
+#### 분류
+- 데이터 전송 속도 & 전송 가능 거리
+- single hop vs multiple hops
+- infrastructure(ex_ AP) vs no infrastructure
 
-- Hidden terminal problem
+#### 특징
+- wired link(유선) 인터넷과의 차이점
+유선 인터넷의 signal 은 외부의 노이즈에는 거의 영향을 받지 않고
+도착지까지 일정한 신호의 세기로 전송이 가능하다.
+
+하지만 무선의 경우 signal 은 외부의 노이즈들로부터 전혀 보호 받지 못하기 때문에
+거리가 멀어질수록 신호의 세기가 감소한다.
+
+- Hidden terminal problem   
+> A - B - C , A 와 C 사이에 큰 산이 있을 경우,   
+> B 는 A 와 C 의 신호를 들을 수 있지만
+> A 와 C 는 서로의 신호를 들을 수 없다. 
+> 즉, 서로 신호를 보내고 있는 중인지 아닌지 알 수 없다.
+
 - Signal attenuation
-    - Collision detection 불가능
-        - 거리가 멀수록 전송되는 신호 세기가 급격히 약해져서,
-        자기 자신의 소리가 매우 크게 들리고, 주변의 소리는 매우 작게 들리기 때문
+    - Collision detection 불가능   
+    거리가 멀수록 전송되는 신호 세기가 급격히 약해지기 때문에,   
+    자기 자신의 소리가 매우 크게 들리고, 
+    주변의 소리는 매우 작게 들린다.    
+    그 결과 collision detection 이 불가능
 
 ### IEEE 802.11 wireless LAN : Wi-Fi (Wireless Fidelity)
+- 버전이 업그레이드 됨에 따라 전송속도 빨라지고 있음
+
 #### Architecture
-- wireless host
-- base state : AP(access point)
+- wireless host : base state 와 통신
+- base state : Access Point (AP)
+- Basic Service Set (BSS) : 무선 hosts, AP
+
+> 무선 host 들이 어떻게 AP 와 연결할까?   
+> - passive scanning :
+> 모든 AP 들은 주기적으로 자기 자신의 정보를 
+> beacon frame 에 담아서 broadcast 한다.   
+> *beacon frame : AP name, AP MAC address
+>
+> - active scanning
 
 #### multiple access
 충돌을 감지 할 수 없기 때문에 데이터가 제대로 갔는지 안갔는지 알 수 없다
-ACK 가 필요하다
+∴ ACK 가 필요하다
 
-### 6.4 Cellular Internet Acess
-#### Architecture
-#### standard
+> 무선통신에서 사용하는 주파수 대역은 2.4Ghz, 이 채널을 11개의 채널로 나눠서 사용한다.
+> 서로 다른 채널은 collision 이 발생하지 않는다. 
+> 즉, 같은 채널을 사용하는 host 들이 하나의 collision domain 이다. 
+
+##### CSMA/CA (Carrier Sense Multiple Access / Collision Avoidance)
+- seder
+    1. DIFS 시간 동안 carrier sense 했을 때, 조용하면 데이터 전송
+    2. 만약 조용하지 않다면, random backoff time 동안 기다렸다 데이터 전송
+
+- receiver
+    1. frame 받으면 SIFS 이후 ACK 를 보낸다
+
+- sender
+    1. timer 가 만료되기 전까지 ACK 가 돌아오지 않는 경우 
+    random backoff 이후 재전송
+
+CSMA/CD 의 경우 collision 이 발생했을 경우 바로 데이터 전송을 멈추지만,
+CSMA/CA 의 경우 collision 이 발생했는지 알 수 없기 때문에, 모든 데이터를 전송하고, 
+ACK 를 통해 확인한다.
+∴ CSMA/CA 가 상대적으로 더 큰 피해가 발생한다.
+
+##### RTS/-CTS exchange
+RTS(Ready To Send) : sender 가 데이터를 전송하겠다고 알리기 위한 frame
+CTS(Clear To Send) : receiver 가 데이터를 전송해도 된다는 알리기 위한 frame
+
+- seder
+    1. carrier sense 했을 때, 조용하면 RTS 전송
+    2. 만약 조용하지 않다면, random backoff time 동안 기다렸다 RTS 전송
+     
+- receiver
+    1. RTS 를 받으면 CTS 를 보낸다
+
+- sender
+    1. CTS 를 받은 경우 CSMA/CA 방식으로 데이터 전송
+    2. CTS 를 받지 못한 경우
+     random backoff time 동안 기다렸다 RTS 재전송
+
+- receiver
+    1. 데이터를 받으면 CSMA/CA 방식으로 ACK 전송
+
+- sender
+    1. timer 가 만료되기 전까지 ACK 가 돌아오지 않는 경우 
+    다시 RTS 전송부터 재시도
+
+#### frame architecture
+##### Wi-Fi Frame addressing
+- address 1 : 데이터 프레임을 전송할 MAC address of wireless host or AP to receive this frame
+- address 2 : 데이터 프레임을 전송하는 MAC address of wireless host or AP transmitting this frame
+- address 3 : 데이터 프레임을 처리할 라우터 MAC address of router interface to which AP is attached
+
+###### [예시] 
+H1 - AP - R1
+
+- H1 이 R1 으로 데이터를 전송할때
+
+① H1 에서 AP 로 전송하는 wi-fi frame
+
+| address 1 | address 2 | address 3 |
+|---|---|---|
+| AP MAC addr | H1 MAC addr | R1 MAC addr |
+
+> AP MAC address 는 어떻게 알 수 있을까?   
+> AP 들이 주기적으로 전송하는 beacon message 를 통해 알 수 있다.
+
+> Router MAC address 는 어떻게 알 수 있을까?   
+> 1. DHCP 를 통해 Router 의 IP 정보 얻음,   
+> 2. ARP Table 통해 Router 의 MAC 정보를 얻음
+>> ##### DHCP   
+>> H1 → AP
+>>
+>> | address 1 | address 2 | address 3 | IP(source/destination) |
+>> |---|---|---|---|
+>> | AP MAC addr | H1 MAC addr | broadcast | ___/broadcast |
+>>
+>> AP → broadcast
+>>
+>> | destination address | source address | IP(source/destination) |
+>> |---|---|---|
+>> | broadcast | H1 MAC addr | ___/broadcast |
+>> 
+>> R1 → AP
+>>
+>> | destination address | source address | IP(source/destination) |
+>> |---|---|---|
+>> | R1 MAC addr | broadcast | R1 IP/H1 IP |
+>>
+>> AP → broadcast
+>>
+>> | address 1 | address 2 | address 3 | IP(source/destination) |
+>> |---|---|---|---|
+>> | broadcast | AP MAC addr | R1 MAC addr | R1 IP/H1 IP |
+
+> 왜 세개의 필드가 필요할까?   
+> 기존 Ethernet protocol 처럼 MAC 주소 두개만을 보낸다고 한다면,   
+> AP MAC address(destination), H1 MAC address(source) 을 담은 frame 을 전송,
+> AP 에서 frame 을 받으면, 어디로 이 frame 을 보낼지 알 수없게 된다.
+
+> IP packet 에서 Router IP 를 통해 알 수 없을까?   
+> AP 는 switch 처럼 link layer device 로 
+> network layer 에서 만든 IP packet 의 내용을 이해할 수 없다.
+
+② AP 에서 R1 로 전송하는 Ethernet frame
+
+| destination address | source address |
+|---|---|
+| R1 MAC addr | H1 MAC addr |
+
+- H1 이 R1 으로 데이터를 전송할때
+
+① R1 에서 H1 로 전송하는 Ethernet frame
+
+| destination address | source address |
+|---|---|
+| H1 MAC addr | R1 MAC addr |
+
+> AP 는 한쪽은 무선, 한쪽은 유선으로 연결되어있는 특이한 형태를 가지고 있다.   
+> router 입장에서는 AP 는 일종의 스위치로, 없는것이나 마찬가지로 취급된다.
+
+② AP 에서 H1 로 전송하는 wi-fi frame
+
+| address 1 | address 2 | address 3 |
+|---|---|---|
+| H1 MAC addr | AP MAC addr | R1 MAC addr |
+
+> 무선 공유기?   
+> AP + Router 의 기능을 하는 장치
+
+##### more
+- frame control
+    - protocol version
+    - type : RTS/CTS/ASK/data 
+    - subtype
+    - etc...
+
+### IEEE 802.11 mobility within same subnet
+이동으로 인해 AP 가 변경할 때, connection 이 끊어질까?
+
+이때 connection 이란? TCP 통신을 의미한다.
+client(socket) 와 server(socket) 사이의 TCP 통신은
+유일한 source IP/port, destination IP/port 조합 이루어진다.
+
+즉, source IP/port, destination IP/port 만 유지가 된다면 
+저 connection 은 사라지지 않고 영원히 존재함
+
+그렇다면 같은 네트워크 내에서 AP 가 바뀔 때 source IP/port 가 변경되는지 확인해보자
+(네트워크가 변경되면 DHCP 서버도 달라지므로 source IP/port 는 변경될것이다.)
+
+H1(client) - switch - R1 - server
+R1 에서 H1 으로 데이터를 전송할 때,   
+
+| destination address | source address | IP(source/destination) |
+|---|---|---|
+| R1 MAC addr | H1 MAC addr | sever IP/H1 IP |
+
+switch 에서 H1 으로 데이터 전송할 때, AP 가 바뀌었으므로
+변경된 port 로 데이터를 전송해 주어야한다.
+
+이때, H1 에서 sever 로 요청을 보낼 때, switch 는 self-learning 을 통해
+변경된 port 번호를 switch table 에 저장하므로 문제 없이 데이터 전송이 가능하다.
+
+> 3G/LTE 의 경우 왜 네트워크가 끊기지 않을까?
+> 통신가의 base state 가 전국에 있고, 그들을 모두 연결(switch) 했을 때 
+> 하나의 Gateway router 로 모이기 때문이다.   
+> 즉, physical coverage 가 매우 큰 것
+
+### IEEE 802.11 advanced capabilities
+- Rate adaptation
+디지털 데이터를 전송하기 위해서 wave 에 입히는 코딩 과정이 필요하다.
+
+코딩하는 여러가지 방법이 있는데, 많은 데이터를 wave 에 입히는 high coding rate 기법이 있다.
+
+high coding rate 일수록 SNR 높다. 
+하지만 채널 환경에 따라서 SNR 이 조금만 떨어져도 BER 이 일정이상 높아진다.
+이때, coding rate 기법을 error 에 상대적으로 강한 것으로 변경한다.
+
+rage adaptation 은 채널 상황에 맞춰서 맞는 coding rate 기법으로 변경한다. 
+
+> AP 와 무선 host 사이의 거리가 가까울 수록 무선 채널의 성능이 좋다
+> - AP 와 무선 host 사이의 거리가 가까울 수록 최대 SNR 이 높다
+
+> SNR(Signal to Noise Ratio)   
+> 시그널과 노이즈 대비 시그널의 비율   
+> BER(Bit for Error)   
+> bit 당 에러 수
+
+> 통신에 많은 전력을 소모하기 때문에, backoff 시간동안에는 전원을 off 하여 전력 절약을 한다.
+
+### 6.4 Cellular Internet Access
+#### Cellular Architecture
+전체 coverage 지역을 cell 이라는 단위로 나눠서 
+cell 하나에 기지국을 지어서 해당 지역의 host 를 관리한다.
+
+#### Multiple Access
+- Channel partitioning : FDMA/TDMA 두 방식을 조합
+    - FDMA(Frequency Division Multiple Access)
+    - TDMA(Time Division Multiple Access)
+- CDMA : Code Division Multiple access   
+여러사람에게 전달하는 메세지를 동시에 전달, 
+각 사용자가 가지고 있는 code(수학적 연산) 를 사용하면
+자신에게 전달되는 메세지만 증폭되고 나머지는 노이즈화됨
+
+#### 3G(voice + data) network architecture
+- 계층구조
+
+기지국 - RNC - SGSN - GGSN 
+
+- DHCP, NAT, DNS 서버는 모두 가장 상위 계층인 GGSN 에 있다.
+- 기지국 - RNC - SGSN - GGSN 간의 통신에서 사용하는 프로토콜들이 있음
 
 ## Mobility
+네트워크가 바뀔때도, 네트워크 연결이 끊기지 않으려면 어떻게 해야할까? 에서
+시작된 이론으로, 아직 실제로 구현되어 사용되고 있지는 않다.
+
+### What is mobility?
+mobile user, passing through multiple access point 
+while maintaining ongoing connections
+
+### mobility : vocabulary
+- home network : permanent hom of mobile
+- permanent address : address in hom e network, 
+can always be used to reach mobile
+- home agent : entity that will perform mobility functions 
+on behalf of mobile, when mobile is remote
+
+- visited network : network in which mobile currently resides
+- care-of-address : address in visited network
+- foreign agent : entity in visited network that performs mobility functions
+on behalf of mobile
+
+- correspondent : wants to communicate with mobile
+
+### mobility : registration
+foreign agent contacts home agent home : "this mobile is resident in my network"
+
+- indirect routing
+    1. correspondent addresses packets using home address of mobile
+    2. home agent intercepts packets, forwards to foreign agent
+    3. foreign agent receives packets forwards to mobile
+    4. mobile replies directly to correspondent
+
+멀리 돌아가므로 지연이 발생한다.
+
+- direct routing
+    1. correspondent requests, receives foreign address of mobile
+    2. correspondent forwards to foreign agent
+    3. foreign agent receives packets forwards to mobile
+    4. mobile replies directly to correspondent
+
+### 6.5 Principle
