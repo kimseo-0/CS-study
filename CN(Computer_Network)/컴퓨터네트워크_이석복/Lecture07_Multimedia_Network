@@ -1,0 +1,76 @@
+# chapter 7: Multimedia networking
+
+## 7.1 multimedia networking applications
+### multimedia : audio
+continuous 한 analog audio signal 을 sampling 해서
+각각의 디지털 데이터화 한다.
+
+> 하나의 sample 의 크기가 작고, 각각의 디지털 데이터의 bit 사이즈가 클수록
+> 오리지널 signal 과 비슷하다.
+
+### multimedia : video
+각 프레임 이미지의
+각 픽셀의 색상을 데이터화 하고, 
+같은 색상의 데이터가 있을 경우 압축
+
+### multimedia networking : 3 application types
+- streaming, store multimedia : 이미 저장되어있는 미디어를 streaming ex) youtube, netflix
+
+- conversational multimedia
+
+- streaming live multimedia : 실시간 미디어를 streaming
+
+## 7.2 streaming store video
+
+video 가 보내지고, client 에게 도착하기 까지 network delay 가 발생하는데,
+
+video 는 여러개의 frame 으로 이루어져있고, 각 프레임을 client 는 전송받는데,
+각 frame 이 전송되어 도착하기까지의 delay 가 일정하지 않아 delay 가 더 길어지는 경우
+문제가 발생한다. > jitter
+
+위와 같은 문제를 해결하기 위해서 client playout delay 를 통해,
+데이터가 도착해도 playout delay 동안 사용자에게 데이터를 보여주지 않고
+기다렸다 보여줌
+
+### DASH (Dynamic, Adaptive Streaming over HTTP)
+
+큰 파일을 작은 조각(chunk)으로 나누고,
+manifest file 를 만든다. 그 안에는
+각 chunk(순서대로 번호 매김) 에 대해서 128kbps, 256kbps ....5mbps 등 각 버전이 저장된 URL 을
+저장한 테이블 정보가 담겨있다.
+
+실제로 
+1. 큰 데이터 파일(ex_ 영상)을 열면 chunk 1번의 128kbps 버전을 불러온다.
+2. 네트워크 상황을 체크한다
+3. 네트워크 환경이 좋으면 더 상위 버전인 256kbp 버전의 다음 chunk 을 불러온다.
+4. 네트워크 환경이 나빠지면 다시 하위 버전의 다음 chunk 를 불러온다.
+
+
+만약 엄청나게 많은 사용자가 동시에 요청을 하는 상황이라면?
+1. multicast
+좋은 방법이지만 구현이 어려워서 실제로 사용하지 않음
+2. CDN
+
+### CDN(Content Distribution Network)
+contents storage 자체를 전세계 곳곳에 설치하고,
+sever 에서는 manifest 파일만 보내주고,
+실제 데이터는 client 와 가까운 곳의 storage 에 요청해서 보내주게 한다.
+
+manifest file 에 적힌 URL 은 모두 동일한데, 
+어떻게 client 와 가까운 곳의 storage 에서
+데이터를 받게 할 수 있을까?
+
+client 가 host 에 요청을 하면 
+CDN 서버의 DNS 서버에서는 요청이 들어온
+source IP 주소를 보고 해당 IP 주소와 가장 가까이에 있는 storage 의 
+IP 주소를 알려준다.
+
+> 가장 가까이에 있다는 의미는 물리적으로 가깝다는 것이 아닌,
+> routing 했을 때 hop 수 가 적은 것을 의미 한다.
+> 그러므로 일반적으로 CDN 서버들을
+> Access Network(ex_ sk, kt 등 가장 상위 계층, internet 연결 직전) 근처에 설치한다.
+
+
+
+
+
