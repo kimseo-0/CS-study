@@ -207,9 +207,80 @@ Pixel vs horizontal field of view
 #### HUMAN HAPTIC SYSTEM
 손에 너무 많은 종류의 신호, 자극이 들어오기 때문에 몰힙형 디스플레이로 구현하는 것이 매우 어렵다.
 
-#### Toch
+#### Touch
 - Mechanoreceptors: Detect pressure, vibrations & texture
 - Thermoreceptors: Detect hot/cold
 - Nocireceptors: Detect pain
 - Proprioreceptors: Detect spatial awareness
+
+- Two haptic information
+    - Kinesthetic
+        - position
+        - orientation
+        - force
+    - Tactile
+        - contact location
+        - pressure
+        - slip and shear
+        - vibration
+        - temperature
+
+> 촉각 디스플레이를 만드는 것이 어려운 이유 
+> - 두가지 정보를 모두 전달하는 장치를 만드는 것이 매우 어렵다
+> - 촉각을 만드는 외부 신호가 매우 많고 복잡하다
+
+#### Cutaneous System
+- skin - heaviest organ in the body
+
+6가지 종류의 감각
+- four kinds mechanoreceptors - 기계적인 자극에 대한 센서
+- 온도, 고통에 반응하는 센서
+
+##### mechanoreceptors
+- slow adapting
+    - merkel discs : 느리게 꾸욱 누르는 감각 - edges, intensity
+    - ruffini corpuscles : 늘어나는, 눌리는 감각 - static force, skin stretch
+
+- rapid adapting
+    - meissner corpuscles : 움직일 때 느껴지는 감각 - velocity, edges
+    - pacinian corpuscles : 매우 빠르게 움직일 때 느껴지는 감각 - acceleration, vibration
+
+> sensory adaptation
+> - rapid adapting : 자극이 빠르게 변화할 때만
+> - slow adapting : 자극이 있을 때만
+
+> spatial resolution   
+> 사람이 두가지 촉감을 구별할 수 있는 거리
+
+> curves of equal sensation magnitudes   
+> 진동 세기에 따른 민감 정도, threshold 가 낮을 수록 민감함
+
+> mechanoreceptors in join capsule   
+> 역감??
+
+
+#### IMMERSIVE HAPTIC INTERFACE
+
+##### BENEFITS OF HAPTICS
+
+> 햅틱스의 경우 사용자의 움직임을 센싱해서 해당 정보를 이용한 response 를 계산하는 것이 중요하다
+
+3/28 4-1 강의 다시 듣기
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
