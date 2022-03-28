@@ -212,3 +212,4 @@ Pixel vs horizontal field of view
 - Thermoreceptors: Detect hot/cold
 - Nocireceptors: Detect pain
 - Proprioreceptors: Detect spatial awareness
+
