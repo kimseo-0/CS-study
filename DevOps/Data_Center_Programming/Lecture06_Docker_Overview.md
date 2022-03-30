@@ -139,14 +139,14 @@ docker run -d -p 4000:80 friendlyhello         # -d : in detacked mode
 docker container stop <hash>
 docker container kill <hash>
 docker container rm <hash>
-docker container rm $(docker image ls -a -q)
+docker container rm $(docker image ls -a -q)    # 모든 container 삭제
 
 docker image rm <image id>
-docker image rm $(docker image ls -a -q)
+docker image rm $(docker image ls -a -q)        # 모든 image 삭제
 
 docker login                                    # Log in this CLI session using your Docker credentials
 docker tag <image> username/repository:tag      # Tag <image> for upload to registry
-docker push username/repository:tag
+docker push username/repository:tag             # Upload tagged image to registry
 docker run username/repository:tag
 
 ```
@@ -154,7 +154,23 @@ docker run username/repository:tag
 ### Docker Practice
 #### Installation
 #### Test-Drive : Hello World
+```
+docker run hello-world
+```
+
 #### Test-Drive : install Ubuntu
+```commandline
+docker pull ubuntu
+docker container run -it -d -rm --name ubuntuos ubuntu:latest
+docker exec -it ubuntuos /bin/bash
+```
+
+#### Test-Drive : install alpine
+```commandline
+docker pull alpine
+docker container runt -it -d --rm --name alpineos apline:latest
+docker exec -it alpineos /bin/bash
+```
 
 > lecture 5 에서 이미 수행함
 
