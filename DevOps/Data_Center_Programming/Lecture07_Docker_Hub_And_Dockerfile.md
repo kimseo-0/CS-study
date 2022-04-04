@@ -71,6 +71,6 @@ docker exec -it alpineos /bin/bash
 # -- name : 별명
 ```
 
-
 ## Reading Articles
-
+- https://jsta.github.io/r-docker-tutorial/04-Dockerhub.html
+- https://docs.docker.com/get-started/04_sharing_app/
