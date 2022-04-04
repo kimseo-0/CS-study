@@ -1,4 +1,4 @@
-# Lecture 05 - Docker Introduction
+# Lecture 07 - Docker Hub and Dockerfile
 
 ## Today's Reading Articles
 
