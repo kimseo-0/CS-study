@@ -266,6 +266,8 @@ Pixel vs horizontal field of view
 > 햅틱스의 경우 사용자의 움직임을 센싱해서 해당 정보를 이용한 response 를 계산하는 것이 중요하다
 
 3/28 4-1 강의 다시 듣기
+3/30 강의 다시 듣기
+
 
 
 
