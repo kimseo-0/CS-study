@@ -267,6 +267,7 @@ Pixel vs horizontal field of view
 
 3/28 4-1 강의 다시 듣기
 3/30 강의 다시 듣기
+4/4 강의 다시 듣기
 
 
 
