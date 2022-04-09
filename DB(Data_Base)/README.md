@@ -1,0 +1,188 @@
+## SQL 문법 정리
+### DDL(데이터 정의어)
+#### CREATE DOMAIN
+``` 
+CREATE DOMAIN [DOMAIN NAME] [TYPE]
+DEFAULT [DEFALUT VALUE]
+CONSTRAINT;
+```
+
+#### CREATE TABLE 
+``` 
+CREATE TABLE [DOMAIN NAME] (
+    [COLUMN NAME] [TYPE]
+    PRIMARY KEY
+    UNIQUE
+    FOREIGNKEY [COLUMN NAME] REFERENCE [TABLE NAME](COLUMN NAME)
+    CHECK
+    ON DELETE[UPDATE] CASCADE/SET NULL/SET DEFAULT
+);
+```
+
+#### CREATE VIEW
+
+#### CREATE INDEX
+
+#### ALTER TABLE
+
+#### DROP TABLE
+
+### DML(데이터 조작어)
+
+#### INSERT
+``` 
+INSERT INTO [TABLE NAME] VALUES [ALL VALUES];
+
+INSERT INTO [TABLE NAME](COLUMN1, COLUMN2...) VALUES [COLUMN1 VALUE, COLUMN2 VALUE ...];;
+
+INSERT INTO [TABLE1 NAME](COLUMN1, COLUMN2...)
+SELECT COLUMN1, COLUMN2... FROM [TABLE2 NAME] WHERE [CONDITION];
+```
+
+#### DELETE
+```
+DELETE FROM [TABLE NAME] WHERE [CONDITION];
+
+DELETE FROM [TABLE NAME]
+```
+
+#### UPDATE
+``` 
+UPDATE [TABLE NAME] SET [COLUMN = VALUE] WHERE [CONDITION]
+
+UPDATE [TABLE NAME] SET [COLUMN =  COLUMN + 10] WHERE [CONDITION]
+```
+
+#### SELECT
+``` 
+SELECT [속성(OR 수식, 그룹함수)]
+FROM [TABLE NAME]
+- 생략 가능 옵션 - 
+[WHERE 조건]
+[GROUP BY 속성 [HABING 조건]]
+[ORDER BY 속성 [ASC | DESC]]
+```
+
+``` 
+SELECT * FROM [TABLE NAME]
+SELECT [TABLE NAME].* FROM [TABLE NAME]
+
+SELECT DISTINCT [COLUMN NAME] FROM [TABLE NAME]
+
+SELECT * FROM [TABLE NAME] WHERE [CONDITION]
+SELECT * FROM [TABLE NAME] WHERE [CONDITION] OR [CONDITION]
+SELECT * FROM [TABLE NAME] WHERE [CONDITION] AND [CONDITION]
+```
+
+##### CONDITION
+``` 
+- [COLUMN NAME] = [VALUE]
+- [COLUMN NAME] <> ([VALUE])
+- [COLUMN NAME] IN ([VALUE])
+- [COLUMN NAME] NOT IN ([VALUE])
+- [COLUMN NAME] IS NULL
+
+- [COLUMN NAME] BETWEEN [VALUE] AND [VALUE]
+
+- [COLUMN NAME] LIKE [FORM]
+- 이름 LIKE '김%'
+```
+##### GROUP BY && 집단함수
+```
+GROUP BY [COLUMN NAME] HAVING [CONDITION]
+
+COUNT : NULL 제외하고 계산
+AVG
+SUM
+MAX
+MIN
+```
+
+#### ORDER BY
+``` 
+SELECT NAME FROM ANIMAL_INS 
+ORDER BY DATETIME LIMIT 1
+```
+
+### SQL 계산 순서
+FROM > WHERE > GROUP BY > HAVING > SELECT > ORDER BY
+
+### JOIN
+- CROSS JOIN - 모든 경우의 수
+- INNER JOIN = JOIN
+    - 세타 JOIN
+    - EQUAL JOIN
+    - NATURAL JOIN
+    - NON-EQUI JOIN
+    - SELF JOIN
+
+- OUTER JOIN
+    - LEFT OUTER JOIN
+    - RIGHT OUTER JOIN
+    - FULL OUTER JOIN
+
+- SEMI JOIN
+
+### 추가
+#### IN 구문
+- 일반 질의문
+- 부속 질의문
+
+#### EXISTS 구문
+``` 
+SELECT * FROM [TABLE NAME] WHERE EXISTS (SELECT ... FROM ...)
+```
+
+#### ALL
+- ⊝ ALL
+- ⊝ :  <, <=, >, >=, <>, >, >=
+``` 
+SELECT * FROM 수강과목 WHERE 수강료 > ALL(100,200,300);
+```
+
+#### ANY
+- ⊝ ANY
+- ⊝ :  <, <=, >, >=, <>, >, >=
+``` 
+SELECT * FROM 수강과목 WHERE 수강료 > ANY(100,200,300);
+```
+
+#### 집합 연산
+- INTERSECTION
+두 개의 릴레이션에 모두 있는 행들을 포함하는 테이블 생성
+- DIFFERENCE
+첫번째 릴레이션에는 있지만 두번째 집합에는 없는 행들을 포함하는 테이블 생성
+
+#### UNIQUE 구문
+중복된 NULL 값도 에러 발생
+
+#### IDCOLUMN 구문
+- 테이블 생성시 IDCOLUMN 속성 추가
+- IDCOLUMN 열 지정
+- 해당 열의 행 값을 자동적으로 생성
+
+#### CHECK 구문
+해당 열에서 허용 가능한 데이터의 범위나 조건 지정
+
+#### LIKE 구문
+- '김%'
+- '%김%'
+- '김__'
+- '_김%'
+
+#### IS NULL 구문
+
+#### CASE 구문
+``` 
+CASE [ENTITY NAME]
+    WHEN [VALUE1] THEN [CHANGE VALUE1]
+    WHEN [VALUE2] THEN [CHANGE VALUE2]
+    ELSE [CHANGE DEFAULT VAULE]
+    END
+
+CASE
+    WHEN [CONDITION1] THEN [VALUE1]
+    WHEN [CONDITION2] THEN [VALUE2]
+    ELSE [DEFAULT VAULE]
+    END
+```
