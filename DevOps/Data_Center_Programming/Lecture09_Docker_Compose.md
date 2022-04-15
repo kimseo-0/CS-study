@@ -1,4 +1,4 @@
-# Lecture 08 - Docker Compose
+# Lecture 09 - Docker Compose
 
 ## Today's Reading Articles
 
