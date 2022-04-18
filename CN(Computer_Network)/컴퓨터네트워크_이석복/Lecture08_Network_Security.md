@@ -8,3 +8,8 @@ only sender 와 receiver 간에만 message 를 이해할 수 있어야한다. �
 - access and availability : 서비스는 항상 접근 가능하고 사용가능해야한다.
 
 > fire hole : router + application
+
+## 8.5 Securing TCP connections: SSL
+
+
+## 8.6 Network layer security: IPsec
