@@ -77,6 +77,93 @@ docker volume prune
 - Common use case is to run a third-party tool inside of a container and connect to the Docker Engine API using a named pipe
 
 ### Practice
+#### step 1: Create volume
+``` 
+docker volume --help
+docker volume create myvol-1
+docker volume ls
+```
+
+#### step 2: Inspect created volume
+``` 
+docker volume inspect myvol-1 // volume 정보 출력
+```
+
+#### step 3: Install Jenkins
+``` 
+docker pull jenkins/jenkins:2.138.4
+```
+> Jenkins
+> - helps to automate the non-human part of the software development process
+> - supports continuous integration and facilitating technical aspects of continuous delivery
+
+#### step 4: Execute Jenkins with Volume
+``` 
+docker run -p 8080:8080 \
+-p 50000:50000 \
+-v myvol-1:/var/jenkins_home \
+jenkins/jenkins:2.138.4
+```
+> password : ?
+
+#### step 5: Confirm Installation
+Connect to http://localhost:8080
+> Input installation password & press "Continue"
+
+#### step 6: Customize Jenkins
+Select "Install suggested plugins" & wait ...
+
+#### step 7: Create Admin User
+Input information & select "Save and Finish"
+
+#### step 8: Confirm Installation
+Input information & select "Save and Finish"
+
+#### step 9: Update Jenkins
+Through "Jenkins 관리"
+
+#### step 10: Jenkins Upgrade
+- Logout Jenkins
+``` 
+docker container stop {jenkins container ID}
+docker volume ls
+docker volume inspect myvol-1
+
+docker run --name jenkins-production --detach \
+-p 50000:50000 \
+-p 8080:8080 \
+-v myvol-1:/var/jenkins_home \
+jenkins/jenkins:2.190.1
+```
+
+#### step 11: Execute Jenkins Again
+- Access to http://localhost:8080
+- Check Jenkins Status
+
+#### step 12: Create & Execute Job
+- Select "새 작업" and input 1st job name(ex_ my-ls)
+- Select "Build", and select "Execute shell"
+- Type "ls" command, then select "Apply" & "Save"
+- Go to top menu, and check "my-ls" job
+- No recent success job? Then execute 1st job now
+- Check recent job result
+
+#### step 13: Execute another Jenkins
+with the same volume!
+``` 
+docker run --name jenkins-production-copy --detach \
+-p 50001:50000 \
+-p 8081:8080 \
+-v myvol-1:/var/jenkins_home \
+jenkins/jenkins:2.190.1
+```
+
+#### step 14: Remove Volume
+``` 
+docker volume ls
+docker volume rm {volume name}
+docker volume prune
+```
 
 ### Docker Compose Examples
 
