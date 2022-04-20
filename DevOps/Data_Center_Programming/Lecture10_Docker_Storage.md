@@ -166,5 +166,18 @@ docker volume prune
 ```
 
 ### Docker Compose Examples
+```
+version: '3.7'
+services:
+  manager:
+    image: jenkins/jenkins:2.190.1
+    ports:
+      - 8080:8080
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+```
+``` 
+docker-compose up
+```
 
 ## Reading Articles
