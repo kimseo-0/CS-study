@@ -1,5 +1,5 @@
-chapter00_OT
-part1.
+# chapter00_OT
+## part1.
 
 왜 소공을 배우는가를 역사적 사건
 
@@ -42,7 +42,7 @@ part1.
 
 이런 사건이 발생하지 않게 하려면 어떤걸 더 신경써야할까?
 
-part2.
+## part2.
 내가 해당 소프트웨어를 개발하는 개발자라면 어떻게 했어야 했을까?
 
 (1) 카카오톡 서비스 장애
@@ -59,7 +59,7 @@ part2.
 1. 주어진 비용과 여건 내에서 소프트웨어를 제작하는 것
 2. 소프트웨어 개발에 대한 유의 의식, 책임감
 
-chapter01_intro
+# chapter01_intro
 1) 소프트웨어 공학의 의미
 
 2) 소프트웨어 공학 윤리 의식
@@ -405,7 +405,7 @@ software > all types of system
 p.36 
 software engineers have responsibilities
 
-chapter02_softwareProcess
+# chapter02_softwareProcess
 2
 software process models
 process activities
@@ -772,7 +772,7 @@ optimising - improvement 프로세스
 
 58-59 요약
 
-chapter03_Agile_SW_Development
+# chapter03_Agile_SW_Development
 agile을 하는 사람의 입장에서의 waterfall 방식에 대한 서술과 문제점 제기
 
 3 Ice-break
@@ -1001,7 +1001,7 @@ https://en.wikipedia.org/wiki/Scrum_(software_development)
 DevOps - WiKipedia
 https://en.wikipedia.org/wiki/DevOps
 
-chapter04_Requirement_Engineering
+# chapter04_Requirement_Engineering
 1 Reqirements Engineering
 
 2
@@ -1521,7 +1521,7 @@ step 3) Change implementation
 변경을 적용
 > Revised requirements
 
-chapter05_System_modeling
+# chapter05_System_modeling
 1 
 System Modeling
 요구사항을 반영해서 시스템에 대한 정의
@@ -1772,7 +1772,7 @@ Model-driven engineering(MDE)
 54-56 Adoption of MDA
 - 제한적인 tool > 제한적으로 해당 툴이 갖추어진 분야, 기업에서 사용 가능하다
 
-chapter06_Architectural_design
+# chapter06_Architectural_design
 1  Architectural Design
 
 2 Topics covered
@@ -2070,7 +2070,7 @@ Compiler components
 
 
 
-Chapter07_Design_and_Implementation
+# Chapter07_Design_and_Implementation
 
 1 Design and Implementation
 2 Topics covered
