@@ -10,6 +10,9 @@
 - Docker Swarm Installation
 - Practice
 
+- Scale service up & down
+- Update service
+
 ### Swarm
 > 사전적 정의 : 떼, 군단 많은 구성 요소들이 하나로 무리 지어 있는 것 ex) 새 떼, 물고기 떼
 
@@ -235,6 +238,27 @@ docker swarm leave --force
 ``` 
 docker-machine stop
 docker-machine rm
+```
+
+### Replicas with Auto-Load-Balancing
+### Manual Scale Up & Down
+``` 
+docker service create --replicas 3 -p 80:80 --name web-1 nginx
+docker service ls
+docker service ps web-1
+docker-machine ls
+
+docker service scale web-1 = 4
+docker service ls
+docker service ps web-1
+docker ps
+docker service scale web-1=5
+docker ps
+docker sebice scale web-1=2
+```
+### Service Update
+``` 
+docker service update --image nginx:1.14.0 web-1
 ```
 
 ## Reading Articles
