@@ -1,4 +1,4 @@
-# Lecture 05 - Docker Introduction
+# Lecture 06 - Docker 
 
 ## Quick Review of Reading Articles
 
