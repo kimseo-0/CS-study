@@ -1,4 +1,4 @@
-# Lecture 06 - Docker 
+# Lecture 06 - Docker Overview
 
 ## Quick Review of Reading Articles
 
