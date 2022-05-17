@@ -1,0 +1,2 @@
+FROM mysql
+CMD ["mysqld"]
