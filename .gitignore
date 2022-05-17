@@ -3,3 +3,4 @@
 *.exe
 
 DevOps/Docker/Docker-Compose/testmysqldrive/app/node_modules
+DevOps/Docker/Docker-Compose/testmysqldrive/app/package-lock.json
