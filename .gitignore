@@ -1,3 +1,5 @@
 
 *.pdf
 *.exe
+
+DevOps/Docker/Docker-Compose/testmysqldrive/app/node_modules
