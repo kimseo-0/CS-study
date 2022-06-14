@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: my-replicaset
+  name: my-replicaset-with-label
   labels:
-    app: my-replicaset
+    app: my-replicaset-with-label
 spec:
   replicas: 3
   selector:
