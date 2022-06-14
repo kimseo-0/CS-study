@@ -1,4 +1,4 @@
-Chapter 8 - Software Testing
+# Chapter 8 - Software Testing
 
 Development testing
 개발에서 테스팅이 무엇인가
@@ -818,7 +818,7 @@ acceptance testing
 문제가 있는 것을 찾아가는 과정
 
 
-Chapter 9 – Software Evolution
+# Chapter 9 – Software Evolution
 기존의 탑다운 waterfall 방법을 기저에 깔고 이야기를 진행
 물론 애자일 데브옵스 와 같은 최신 인터넷 기법에 서도 사용 가능
 
@@ -1280,8 +1280,7 @@ iWoz
 닌텐도 이야기
 the phoenix project
 
-chapter 23
-Chapter 23 – Project planning
+# Chapter 23 – Project planning
 Topics covered
 - Software pricing : 소프트웨어의 가격을 매기는 법
 - Plan-driven development : 계획은
@@ -1487,7 +1486,7 @@ Topics covered
 50분부터 10분정도
 
 
-chapter 24
+# chapter 24
 소프트웨어가 양적 질적 수준에 도달했는가 확인하는 작업
 ² Software quality 정의
 ² Software standards
