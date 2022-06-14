@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eva-east
+  labels:
+    app: eva
+    release: east
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: eva
+      release: east
+  template:
+    metadata:
+      labels:
+        app: eva
+        release: east
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+      - name: redis
+        image: redis
+        volumemounts:
+        - name: redis-storage
+          mountPath: /data/redis
+      volumes:
+      - name: redis-storage
+        emptyDir: {}
