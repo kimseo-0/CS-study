@@ -331,5 +331,70 @@ PMT 에 각 page frame 마다 reference bit 와 update bit 을 저장
 > write-back 하면서 update bit = 0 으로 초기화
 
 ## SW Component
+가상 메모리 성능 향상을 위한 관리 기법들
+- Allocation strategies (할당 기법)
+- Fetch stratagies
+- Placement stratagies (배치 기법)
+- Replacement strategies (교체 기법)
+- Cleaning strategies (정리 기법)
+- Load control strategies (부하 조절 기법)
+
+### Allocation strategies (할당 기법)
+각 프로세스에게 메모리를 얼마 만큼 줄 것인가?
+- Fixed allocation (고정 할당) : 프로세스의 실행 동안 고정된 크기의 메모리 할당
+- Variable allocation (가변 할당) : 프로세스의 실행 동한 유동적인 크기의 메모리 할당
+
+고려사항
+- 프로세스 실행에 필요한 메모리 양을 예측하여 적절한 메모리 양을 결정
+> - 너무 큰 메모리 할당시 - 메모리 낭비 발생
+> - 너무 적은 메모리 할당시 - page fault rate 증가 가능성이 높음, 시스템 성능 저하
+
+### Fetch strategies
+특정 page 를 메모리에 언제 적재할 것인가?
+- Demand fetch (demand paging) : 프로세스가 참조하는 페이지들만 적재
+- Anticipatory fetch (pre-paging) : 참조될 가능성이 높은 page 를 예측하여 미리 적재
+> - 예측에 성공한다면, page fault overhead 를 줄일 수 있음
+> - 에측에 실패한다면, 더 성능이 나빠질 수 있음, Hit ratio (예측 성공 비율) 에 민감
+> - 예측하는 연산에 대한 kernel 개입으로 prediction overhead 발생
+
+실제로 대부분의 시스템은 Demand fetch 기법 사용
+- 일반적으로 준수한 성능
+- Anticipatory fetch 에서 예측 실패시 자원 낭비가 크기 때문
+
+### Placement stratagies (배치 기법)
+page/segment 를 어디에 적재할 것인가?
+> paging system 에서는 page frame 이 일정하기 때문에 불필요한 기법
+
+segmentation system 에서의 배치 기법
+- first-fit
+- best-fit
+- worst-fit
+- next-fit
+
+### Replacement strategies (교체 기법)
+빈 page frame 이 없을 때, 새로운 page 를 어떤 page와 교체할 것인가?
+- Fixed allocation 을 위한 교체 기법
+- Variable allocation 을 위한 교체 기법
+> Page replacement schemes 에서 재언급 에정
+
+### Cleaning Strategies (정리 기법)
+변경된 page 를 언제 write-back 할 것인가?
+> 변경된 내용을 언제 swap device 에 반영 할 것인가?
+
+- Demand cleaning : 해당 page 가 메모리에서 내려오 때, write-back
+- Anticipatory cleaning (pre-cleaning) : 더 이상 변경될 가능성이 없다고 판단시 미리 write-back
+    - page 교체 시 발생하는 write-back 시간을 줄여, page 교체 시간을 줄일 수 있음 
+    - 예측 실패로 인해 write-back 이후 page 내용이 수정된다면 overhead 발생
+
+실제 대부분의 시스템은 demand cleaning 기법 사용
+- 일반적으로 준수한 성능
+- Anticipatory fetch 에서 예측 실패시 자원 낭비가 크고, 예측이 어렵다
+
+### Load control strategies (부하 조절 기법)
+> load : 부하
+
+시스템의 multi-programming degree 조절
+> - multi-programming degree : 시스템에 들어온 프로그램의 수
+> - 시스템에 들어온 프로그램의 수에 따라 프로세스의 수에 영향을 주며 이는 Allocation strategies 와 연계된다.
 
 ## Page replacement schemes
