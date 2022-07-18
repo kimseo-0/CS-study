@@ -371,12 +371,6 @@ segmentation system 에서의 배치 기법
 - worst-fit
 - next-fit
 
-### Replacement strategies (교체 기법)
-빈 page frame 이 없을 때, 새로운 page 를 어떤 page와 교체할 것인가?
-- Fixed allocation 을 위한 교체 기법
-- Variable allocation 을 위한 교체 기법
-> Page replacement schemes 에서 재언급 에정
-
 ### Cleaning Strategies (정리 기법)
 변경된 page 를 언제 write-back 할 것인가?
 > 변경된 내용을 언제 swap device 에 반영 할 것인가?
@@ -402,5 +396,57 @@ segmentation system 에서의 배치 기법
 > - 고부하 상태 (over-loaded) : 자원에 대한 경쟁 심화로 성능 저하 
 >> Thrashing 현상 발생 : 과도한 page fault 가 발생하는 현상
 
+### Replacement strategies (교체 기법)
+빈 page frame 이 없을 때, 새로운 page 를 어떤 page와 교체할 것인가?
+- Fixed allocation 을 위한 교체 기법
+- Variable allocation 을 위한 교체 기법
+
+> 메모리 기법에서도 Locality 를 고려했을 때, 더 좋은 성능을 낼 수 있음
+> - Locality : 프로세스가 프로그램/데이터의 특정 영역을 집중적으로 참조하는 현상
+
+#### Fixed allocation
+##### Min Algorithm (OPT - optimal algorithm)
+minimize page fault frequency, page fault 를 최소화 하는 기법
+- 앞으로 가장 오랫동안 참조되지 않을 page 교체
+- page reference string 을 미리 알고 있어야 하므로, 실현 불가능 하다
+> 다른 교체 기법이 얼마나 최적에 가까운지 성능 평가 도구로 사용
+
+##### Random Algorithm
+무작위로 교체할 page 선택
+- low overhead : 랜덤으로 선택하기 때문에 선택 방법에 있어서 오버헤드가 낮음
+- no policy : 특별한 정책 없음
+> 이 기법도 다른 교체 기법의 성능 평가 도구로 사용,
+> 다른 교체 기법이 이 기법보다 성능이 좋지 않다면, 
+> 해당 기법을 쓰는 것보다 램덤 하게 page 를 선택하는 것이 더 낫다고 판단 가능
+
+##### FIFO Algorithm
+가장 오래된 page 를 교체 (First In First Out)
+> page 가 적재 된 시간을 기억 해둠
+
+locality 에 대한 고려가 전혀 없음, 자주 사용되는 page 가 교체될 가능성이 높다
+> FIFO anomaly   
+> 더 많은 page fram 을 할당 받음에도 불구하고 page fault 의 수가 증가하는 경우가 있음
+
+##### LRU (Least Recently Used) Algorithm
+가장 오랫동안 참조되지 않음 page 교체
+> page 참조 시 마다 시간을 기록해야 함
+
+locality 에 기반을 둔 교체 기법으로 Min algorithm 에 근접한 성능
+> 실제로 가장 많이 활용되는 기법
+
+단점
+- 참조 시마다 시간을 기록해야 하므로 overhead 가 발생
+> 정확한 시간 대신 순서만 기록하는 등 간소화된 정보 기록으로 해결 가능
+- Loop 실행에서 page fault 수가 급격히 증가할 수 있다.
+> ex) loop 를 위한 reference string length = 4 일때, page frame 이 3개 라면?   
+> loop 에서 4번째 page 를 참조할 때, 1번째 page 가 가장 마지막에 참조되었으므로 1번째 page 와 교체한다.
+> 그 후 1번째 page 를 참조 해야하므로, 2번째 page 와 교체, 이런식으로 계속 page fault 가 발생할 수 있다.
+>> 위 문제를 해결하기 위해서는, Allocation 기법을 통해 page frame 을 하나 더 할당 해 주어야 한다.
+
+##### LFU (Least Frequently Used) Algorithm
+
+##### NUR (Not Used Recently)
+##### Clock Algorithm
+##### Second Chance Algorithm
 
 ## Page replacement schemes
