@@ -1,5 +1,6 @@
 # chapter 8. 가상 메모리
 
+# Virtual Memory
 ## Non-continuous allocation
 - 사용자 프로그램을 여러 개의 block 으로 분할
 - 실행 시, 필요한 block 들만 메모리에 적재
@@ -277,3 +278,58 @@ paging 과 segmentation 의 장점 결합
     - 메모리 소모가 큼
     - Address mapping 과정이 복잡
 - Direct mapping 의 경우, 메모리 접근이 3배로 성능 저하
+
+# Virtual Memory Management
+- 관리의 목적 : 가상 메모리 시스템 '성능' 최적화
+- cost model 을 세우고 cost 를 낮출 수 있는 다양한 최적화 기법 고안
+> Cost model : 성능 측정 기준
+
+## cost model
+> 아래 내용은 page system 을 가정 했을 때, 
+> segment system 은 page 를 segment 로 치환하여 생각하면 됨
+
+- Page fault frequency (발생 빈도)
+- page fault rate (발생률)
+> - 일반적으로 virtual memory system 의 cost model 로 사용
+> - page fault 를 context switching 을 발생시켜 오버헤드 발생
+
+page fault rate 를 최소화 할 수 있도록 전략 설계
+> - context switch 와 kernel 개입 최소화를 통해 시스템 성능 향상
+
+- Page reference string (페이지 참조 문자열) (ω) 
+    - 프로세스의 수행 중 참조한 페이지 번호 순서 기록
+    - ω = r1r2r3....rT (ri = 페이지 번호(0 <= i < N, i 는 정수), N 은 프로세스의 page 수)
+- Page fault rate = F(ω) = Num of page faults during ω / |ω|
+    - |ω| : page string 의 길이
+
+## HW Component
+### Address translation device (주소 사상 장치)
+- 주소 사상을 효율적으로 수행하기 위해 사용
+- ex) TLB(associated memories), Dedicated page-table register, cache memories
+
+### Bit Vectors
+페이지 사용 상황에 대한 정보를 기록하는 비트들
+- Reference bits (used bit): 참조 비트, 해당 page frame 이 사용중인지 아닌지
+- Update bits (modified bits, write bits, dirty bits): 갱신 비트, page frame 에 있는 데이터가 갱신 되었는지
+
+PMT 에 각 page frame 마다 reference bit 와 update bit 을 저장
+
+#### Reference bit vector
+메모리에 적재된 각각의 page 가 '최근'에 참조 되었는지 표시
+> locality
+
+운영방법
+1. 프로세스에 의해 참조되면 해당 page reference bit 을 1 설정
+2. 주기적으로 모든 reference bit 을 0 으로 초기화
+
+#### Update bit vector
+페이지가 메모리에 적재된 후, 프로세스에 의해 수정 되었는지 표시
+> Reference bit 과 달리 주기적 초기화 x
+
+즉 update bit = 1 이라는 것은, 해당 page 의 (main memory 상 내용 != swap device 의 내용) 이라는 의미
+👉 해당 페이지에 대한 write-back (to swap device) 이 필요한 상황이다.
+> write-back 하면서 update bit = 0 으로 초기화
+
+## SW Component
+
+## Page replacement schemes
