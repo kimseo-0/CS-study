@@ -397,4 +397,10 @@ segmentation system 에서의 배치 기법
 > - multi-programming degree : 시스템에 들어온 프로그램의 수
 > - 시스템에 들어온 프로그램의 수에 따라 프로세스의 수에 영향을 주며 이는 Allocation strategies 와 연계된다.
 
+적당한 수준의 multi-programming degree 를 유지해야 함 > 저부하도 고부하도 아닌 평온한 상태(고원 영역)
+> - 저부하 상태 (under-loaded) : 시스템 자원 낭비 및 성능 저하
+> - 고부하 상태 (over-loaded) : 자원에 대한 경쟁 심화로 성능 저하 
+>> Thrashing 현상 발생 : 과도한 page fault 가 발생하는 현상
+
+
 ## Page replacement schemes
