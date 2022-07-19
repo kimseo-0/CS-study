@@ -469,7 +469,13 @@ Bit vector 를 사용하여 교체 순서의 우선순위를 정함
 
 ##### Clock Algorithm
 > NUR 을 실제로 적용한 알고리즘
-Reference bit 를 사용함 > 주기적인 초기화 없음
+Reference bit 를 사용함
+
+page frame 을 순차적으로 가리키는 pointer 를 사용하여 교체될 page 를 결정한다.
+- Pointer 를 돌리면서 교체 page 를 결정
+    - pointer 가 가리키는 page frame 의 reference bit 이 1일 경우, 다음 page frame 으로 pointer 를 옮기고 기존 page frame 의 reference bit 을 0 으로 초기화 한다.
+
+> reference bit 의 주기적인 초기화는 없음
 
 ##### Second Chance Algorithm
 
