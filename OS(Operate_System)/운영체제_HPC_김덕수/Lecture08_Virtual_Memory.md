@@ -473,10 +473,26 @@ Reference bit 를 사용함
 
 page frame 을 순차적으로 가리키는 pointer 를 사용하여 교체될 page 를 결정한다.
 - Pointer 를 돌리면서 교체 page 를 결정
-    - pointer 가 가리키는 page frame 의 reference bit 이 1일 경우, 다음 page frame 으로 pointer 를 옮기고 기존 page frame 의 reference bit 을 0 으로 초기화 한다.
-
+    - pointer 가 가리키는 page frame 의 reference bit 이 1일 경우, 현재 page frame 의 reference bit 을 0 으로 초기화 한 후, 다음 page frame 으로 pointer 이동
+    - reference bit 이 0일 경우, 해당 page frame 의 page 를 교체
 > reference bit 의 주기적인 초기화는 없음
 
+- 먼저 적재된 page 가 교체될 가능성이 높다 > FIFO 와 유사
+- reference bit 를 사용하여 교체 페이지를 결정한다 > LRU와 유사
+
 ##### Second Chance Algorithm
+- closck algorithm 과 유사
+    - pointer 를 순차적으로 옮기면서 현재 교체 page 를 결정
+- Reference bit 와 함께 Update bit 도 고려 함
+- 현재 가리키고 있는 page 의 (r, m) 확인
+    - (0, 0) : 교체 page 로 결정
+    - (0, 1) : (0, 0) 으로 초기화 후, write-back list 에 추가 후 이동
+    - (1, 0) : (0, 0) 으로 초기화 후, 이동
+    - (1, 1) : (0, 1) 으로 초기화 후, 이동
+
+##### Other Algorithm
+...
+- MRU (Most Recently Used)
+- MFU (Most Frequently Used)
 
 ## Page replacement schemes
