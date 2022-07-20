@@ -495,4 +495,54 @@ page frame 을 순차적으로 가리키는 pointer 를 사용하여 교체될 p
 - MRU (Most Recently Used)
 - MFU (Most Frequently Used)
 
-## Page replacement schemes
+### Other Considerations
+#### Page Size
+시스템 특성에 따라 page size 를 다름
+> 최근은 점점 커지는 경향이 있다.   
+> why?   
+> HW 발전 경향으로, CPU 성능이 좋아지고, Memory size 의 크기가 커지고 있다
+> - memory size 가 크다는 건 그만큼 page 수가 커질 수 있음 > page fault 가 더 많이 발생함
+> - cpu 의 성능에 I/O 가 따라가지 못함 > I/O 시간이 CPU 의 처리시간 대비 더 오래걸림
+> 따라서 page fault 수를 줄이고, I/O 시간을 감소 시킬 수 있도록 page size 가 증가하는 경향을 보인다.
+
+| |small page size|large page size|
+|---|---|---|
+|page table|large|samll|
+|내부 단편화|감소|증가|
+|I/O 시간|증가|감소|
+|locality|향상|저하|
+|page fault|증가|감소|
+
+#### Program Restructuring
+가상 메모리 시스템의 특성에 맞도록 프로그램 재구성
+- 사용자가 가상 메모리 관리 기법에 대해 이해하고 있다면, 프로그램의 구조를 변경하여 성능을 높일 수 있음
+
+ex)   
+가정
+- page size = 1KB
+- sizeof(int) = 4 bytes
+
+'''
+int a[256][256];
+int i, j;
+for (j = 0; j < 256; j++) {
+    for (i = 0; i < 256, i++) {
+        a[i][j] = 0;
+    }
+}
+'''
+다음과 같은 코드가 있을 때, 
+배열 a의 하나의 행이 page 하나를 차지한다 (256 * 4 = 약 1KB)
+
+위 코드상에서는 매 루프 마다 다른 page frame 에 있는 page 에 접근하여 쓰기를 하고 있다.
+즉, page fault 가 많이 발생
+
+위 코드에서 i 와 j 를 바꿔주면 더 성능이 좋은 코드 작성 가능
+
+#### TLB Reach
+TLB 를 통해 접근 할 수 있는 메모리의 양 = num of entries * page size
+
+TLB 의 hit ratio 를 높이려면?
+- TLB 의 크기 증가 (TLB Reach 증가) > TLB 의 가격이 비싸기 때문에 많은 비용이 든다.
+- Page 크기 증가 또는 다양한 page size 지원
+> 최근 OS 의 발전으로 가능   
