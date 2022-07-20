@@ -396,7 +396,7 @@ segmentation system 에서의 배치 기법
 > - 고부하 상태 (over-loaded) : 자원에 대한 경쟁 심화로 성능 저하 
 >> Thrashing 현상 발생 : 과도한 page fault 가 발생하는 현상
 
-### Replacement strategies (교체 기법)
+## SW Component: Replacement strategies (교체 기법)
 빈 page frame 이 없을 때, 새로운 page 를 어떤 page와 교체할 것인가?
 - Fixed allocation 을 위한 교체 기법
 - Variable allocation 을 위한 교체 기법
@@ -404,14 +404,14 @@ segmentation system 에서의 배치 기법
 > 메모리 기법에서도 Locality 를 고려했을 때, 더 좋은 성능을 낼 수 있음
 > - Locality : 프로세스가 프로그램/데이터의 특정 영역을 집중적으로 참조하는 현상
 
-#### Fixed allocation
-##### Min Algorithm (OPT - optimal algorithm)
+### Fixed allocation
+#### Min Algorithm (OPT - optimal algorithm)
 minimize page fault frequency, page fault 를 최소화 하는 기법
 - 앞으로 가장 오랫동안 참조되지 않을 page 교체
 - page reference string 을 미리 알고 있어야 하므로, 실현 불가능 하다
 > 다른 교체 기법이 얼마나 최적에 가까운지 성능 평가 도구로 사용
 
-##### Random Algorithm
+#### Random Algorithm
 무작위로 교체할 page 선택
 - low overhead : 랜덤으로 선택하기 때문에 선택 방법에 있어서 오버헤드가 낮음
 - no policy : 특별한 정책 없음
@@ -419,7 +419,7 @@ minimize page fault frequency, page fault 를 최소화 하는 기법
 > 다른 교체 기법이 이 기법보다 성능이 좋지 않다면, 
 > 해당 기법을 쓰는 것보다 램덤 하게 page 를 선택하는 것이 더 낫다고 판단 가능
 
-##### FIFO Algorithm
+#### FIFO Algorithm
 가장 오래된 page 를 교체 (First In First Out)
 > page 가 적재 된 시간을 기억 해둠
 
@@ -427,7 +427,7 @@ locality 에 대한 고려가 전혀 없음, 자주 사용되는 page 가 교체
 > FIFO anomaly   
 > 더 많은 page fram 을 할당 받음에도 불구하고 page fault 의 수가 증가하는 경우가 있음
 
-##### LRU (Least Recently Used) Algorithm
+#### LRU (Least Recently Used) Algorithm
 가장 오랫동안 참조되지 않음 page 교체
 > page 참조 시 마다 시간을 기록해야 함
 
@@ -443,7 +443,7 @@ locality 에 기반을 둔 교체 기법으로 Min algorithm 에 근접한 성�
 > 그 후 1번째 page 를 참조 해야하므로, 2번째 page 와 교체, 이런식으로 계속 page fault 가 발생할 수 있다.
 >> 위 문제를 해결하기 위해서는, Allocation 기법을 통해 page frame 을 하나 더 할당 해 주어야 한다.
 
-##### LFU (Least Frequently Used) Algorithm
+#### LFU (Least Frequently Used) Algorithm
 가장 참조 횟수가 적음 page 를 교체
 > page 참조 시 마다 참조 횟수 누적
 
@@ -455,7 +455,7 @@ locality 에 기반을 둔 교체 기법으로 Min algorithm 에 근접한 성�
 >  앞으로 많이 사용될 확률이 있어 계속 교체되면서 page fault 가 발생할 수 있다.
 - 참조 횟수를 누적, 기록해야하는 overhead 가 있다.
 
-##### NUR (Not Used Recently)
+#### NUR (Not Used Recently)
 LRU approximation scheme: LRU 보다 적은 overhead 로 비슷한 성능 달성을 목표로 함
 
 Bit vector 를 사용하여 교체 순서의 우선순위를 정함
@@ -467,7 +467,7 @@ Bit vector 를 사용하여 교체 순서의 우선순위를 정함
 3. (r, m) = (1, 0)
 4. (r, m) = (1, 1)
 
-##### Clock Algorithm
+#### Clock Algorithm
 > NUR 을 실제로 적용한 알고리즘
 Reference bit 를 사용함
 
@@ -480,7 +480,7 @@ page frame 을 순차적으로 가리키는 pointer 를 사용하여 교체될 p
 - 먼저 적재된 page 가 교체될 가능성이 높다 > FIFO 와 유사
 - reference bit 를 사용하여 교체 페이지를 결정한다 > LRU와 유사
 
-##### Second Chance Algorithm
+#### Second Chance Algorithm
 - closck algorithm 과 유사
     - pointer 를 순차적으로 옮기면서 현재 교체 page 를 결정
 - Reference bit 와 함께 Update bit 도 고려 함
@@ -490,10 +490,117 @@ page frame 을 순차적으로 가리키는 pointer 를 사용하여 교체될 p
     - (1, 0) : (0, 0) 으로 초기화 후, 이동
     - (1, 1) : (0, 1) 으로 초기화 후, 이동
 
-##### Other Algorithm
+#### Other Algorithm
 ...
 - MRU (Most Recently Used)
 - MFU (Most Frequently Used)
+
+### Variable allocation
+프로세스에 할당 하는 page frame 의 수가 가변적
+
+#### Working Set algorithm
+working set : Process 가 특정 시점에 자주 참조하는 page 들의 집합 = 특정 시점에 참조된 page 들의 집합
+>  특정 시점 : 최근 일정 시간 (Δ 시간)
+- 시간에 따라 변함
+- W(t, Δ) : [t - Δ, t] 동안 참조된 pages 들의 집합
+> Δ : window size, system parameter
+
+- locality 에 기반을 둠
+    - page fault rate 감소
+    - 시스템 성능 향상
+- working set 을 메모리에 항상 유지
+
+Window size(Δ) 는 고정값, memory allocation 가변적
+> Δ 값에 따라 성능이 달라질 수 있다.(Δ 값이 성능을 결정 짓는 중요한 요소)
+
+> Q. memory allocation 고정, window size 가 가변적인 것처럼 동작하는 allocation?   
+> A. LRU
+
+##### window size vs working set size
+window size 가 커질수록, working set size 는 program size 에 수렴한다.
+- window size 가 작을 때, 조금만 커져도 working set size 가 급격하게 증가(변화율 큼)
+- window size 가 클때, working set size 가 조금씩 증가(변화율 작음)
+> why? locality 때문
+
+##### working set transition
+working set 에서 working set 으로 변화할 때, 일시적으로 working set size 가 증가함
+
+ex) 
+- loop-1 : working set = {p0, p1} 
+- loop-2 : working set = {p2, p3, p4} 
+
+loop-1 에서 loop-2 로 넘어갈 때, loop-1, loop-2 가 걸쳐지면서 working set size 가 증가
+
+##### 성능 평가
+fixed allocation 에서는 page frame 수가 동일할 때, page fault 가 얼마나 발생했는지도 평가했지만,
+variable allocation 에서는 할당하는 page frame(주어진 자원의 수)이 다르기 때문에 page fault 만 가지고 평가할 수 없다.
+
+따라서, page fault 횟수와 함깨 평균적으로 몇개의 page frame 을 할당 받았는가에 대한 지표를 가지고 평가함
+- page fault 가 발생하는 cost(pf)
+- page 를 메모리에 유지하기 위해 드는 cost(p)
+👉  cost = cost(pf) * num of page fault + cost(p) * avg num of page frame 
+
+##### 특성/단점
+- 특성
+    - 적재되는 page 가 없더라도, 메모리를 반납하는 page 가 있을 수 잇음
+    - 새로 적재되는 page가 있더라도, 교체되는 page가 없을 수 있음
+ 
+- 단점
+    - working set management overhead
+    > page fault 가 없더라도 working set(residence set) 을 지속적으로 관찰하면서 관리해야하는 overhead 발생
+
+##### mean number of frames allocated (window size) vs page fault rate
+window size 가 커질수록
+- lifetime 은 커짐 > page 유지 비용 증가
+- page fault rate 은 작아짐.
+> 적당한 window size 를 설절해야함
+
+#### Page Fault Frequency algorithm
+Residence set size 를 page fault rate 에 따라 결정
+- Low page fault rate 일때 (long inter-fault time), process 에 할당된 page frame 수를 감소
+- High page fault rate 일때 (short inter-fault time), process 에 할당된 page frame 수를 증가
+> inter-fault time (IFT) : page fault 와 page fault 간 발생 시간 차이
+
+page fault 가 발생 시에만 수행 > low overhead
+> working set algorithm 의 단점인 항상 관리해야 하는 단점 해결
+
+##### criteria for page fault rate: threshold value(τ)
+- IFT > τ : Low page fault rate
+- IFT < τ : High page fault rate
+> page fault rate 이 큰지 작은지를 판단할 기준 필요
+
+##### algorithm
+1. Page fault 발생시, IFT 계산
+    - IFT = t(c) - t(c-1), 
+    > - t(c): 현재 발생한 page fault 의 발생 시간, 
+    > - t(c-1): 바로 직전에 발생한 page fault 의 발생 시간
+2. IFT > τ 일때,
+    - Residence set 에는 (t(c-1), t(c)] 동안 참조된 page 만 남기고 나머지 page 는 메모리에서 내림
+    > 할당된 page frame 수를 유지하거나 감소 시킨다.
+3. IFT < τ 일때,
+    - 기존 page 들을 유지한 상태
+    - 현재 새로 참조된 page 를 추가 적재
+    > 할당된 page frame 수 증가
+
+#### Variable MIN (VMIN) algorithm
+- variable allocation 기반 교체 기법 중 optimal algorithm
+: 평균 메모리 할당량과 page fault 발생 횟수 모두 고려 했을 때, optimal
+- page reference string 을 미리 알고 있어야 하므로 실현 불가능
+- [t, t + Δ] 를 고려해서 교체할 page 선택
+
+##### algorithm
+page r 이 t 시간에 참조 되면, page r 이 (t, t + Δ] 사이에 다시 참조되는지 확인
+- 참조 된다면, page r 유지
+- 참조 안 된다면, page r 을 메모리에서 내림
+
+##### 최적 성능을 위한 Δ 값은?
+Δ = R / U
+- U: 한 번의 참조 시간 동안 page 를 메모리에 유지하는 비용
+- R: page fault 발생 시 처리 비용
+
+proof
+- R > Δ * U (Δ 가 작으면), 처리 비용 > page 유지 비용
+- R < Δ * U (Δ 가 크면), page fault 처리 비용 > page 유지 비용
 
 ### Other Considerations
 #### Page Size
@@ -546,3 +653,4 @@ TLB 의 hit ratio 를 높이려면?
 - TLB 의 크기 증가 (TLB Reach 증가) > TLB 의 가격이 비싸기 때문에 많은 비용이 든다.
 - Page 크기 증가 또는 다양한 page size 지원
 > 최근 OS 의 발전으로 가능   
+
