@@ -129,3 +129,36 @@ Hierachical directory structure 의 확장
  문제점
  - file 탐색 시, Infinite loop 를 
   
+## File Protection
+File 에 대한 부적절한 접근 방지
+> 다중 사용자 시스템에서 더욱 필요
+
+접근 제어가 필요한 연산들
+- Read
+- Write
+- Execute
+- Append
+
+### File Protection mechanism
+파일 보호 기법은 system size 및 응용 분야에 따라 다를 수 있음
+- password 기법
+  - 각 file 들에 PW 부여
+  - 비현실적
+    > - 사용자들이 파일 가각에 대한 PW 를 기억해야 함
+    > - 접근 권한 별로 서로 다른 PW 를 부여 해야 함
+
+- Access Matrix 기법
+
+#### Access Matrix
+범위(domain)와 개체(object) 사이의 접근 권한을 명시
+
+- Object : 접근 대상(file, directory, HW/SW)
+- Domain : 접근 권한의 집합, 같은 권한을 가지는 그룹 (사용자, 프로세스)
+- Access right : 접근 권한 <object name, rights set>
+
+#### Implementation of Access Matrix
+##### Global Table
+시스템 전체 file 들에 대한 권한을 Table 로 유지
+ex) <domain name, object name, rights set>
+
+- 단점 : large table size > 필요 없는 빈 공간들까지 함께 저장해야 함
