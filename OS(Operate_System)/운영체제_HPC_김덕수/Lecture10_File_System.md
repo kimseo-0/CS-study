@@ -73,7 +73,7 @@ mapping 된 physical address 를 전달 받은 Disk controller 가 작업을 수
 - Directed access (직접 접근) : 원하는 block 을 직접 접근
 - Indexed access : index 를 참조하여, 원하는 block 을 찾은 후 데이터에 접근
 
-### File System Organization
+#### File System Organization
 - Partitions(volumes, minidisks) : virtual disk, 논리적인 disk
 - Directory : file 들을 분류, 보관하기 위한 개념
   - operations of direcotry : search file, create file, delete file, list directory ...   
@@ -82,4 +82,50 @@ mapping 된 physical address 를 전달 받은 Disk controller 가 작업을 수
 > Mounting : 현재 File system 에 다른 File system 을 붙이는 것
 
 ## Directory Structure
+### Logical direcoty structure
+#### Flat (single-level) directory
+File system 내에 하나의 directory 만 존재
 
+문제점
+- File naming : 파일 충돌, 중복되는 파일 명이 생기기 쉽다
+- File protection : 파일이 덮어씌어지는 문제 발생
+- File management  : 파일 관리 어렵
+- 다중 사용자 환경에서 문제가 더 커짐
+
+#### 2-Level Directory Strucure
+사용자 마다 하나의 directory 배정
+
+- 구조
+  - MFD (Master File Directory) : root
+  - UFD (User File Directory) : 사용자 별 파일
+
+문제점
+- sub directory 생성불가 > single-level 에서 발생하는 file 관련 문제 발생
+- 사용자간 파일 공유 불가 
+> 만약 다른 사용자에게 자신의 파일을 공유하려고 한다면 전체 폴더에 액세스 하게 해야함 > 보안 문제 발생
+
+#### Hierarchical Directory Structure
+Tree 형태의 계층적 directory
+- 사용자 하부 directory 생성/관리 가능
+  - system call 제공 (OS)
+
+> 대부분의 OS 가 사용
+
+용어
+- Home directory : 접근 가능한 가장 상위의 directory
+- Current directory : 현재 탐색중인 directory
+- Absolute pathname : 절대 경로, root directory 로부터 나타낸 경로
+- Relative pathname : 상대 경로, Current directory 로부터 나타낸 경로
+
+#### Acyclic Graph Directory Structure
+> Acyclic : 원형이 될 수 없는, cyclic 할 수 없는
+Hierachical directory structure 의 확장
+- directory 안에 shared directory, shared file 을 담을 수 있다.
+> Link 개념 사용 ex) 바로가기
+
+#### General Graph Directory Structure
+ Acyclic Graph Directory Structure 에서 cycle 을 허용한 형태
+ 
+ 문제점
+ - file 탐색 시, Infinite loop 를 
+  
