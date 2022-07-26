@@ -162,3 +162,49 @@ File 에 대한 부적절한 접근 방지
 ex) <domain name, object name, rights set>
 
 - 단점 : large table size > 필요 없는 빈 공간들까지 함께 저장해야 함
+> 최대한 빈 공간이 생기지 않는 방법을 고안해보자
+
+##### Access list
+파일 별로 해당 각 도메인이 가지고 있는 권한을 저장
+- Access matirix 의 열을 list 로 표현
+- A list(F) = {<D1, R1>, <D2, R2> ......}
+- Object 생성 시, 각 domain 에 대한 권한 부여
+- Object 접근 시 권한을 검사
+> 실제 OS 에서 많이 사용됨
+
+
+- 단점 : 파일에 엑세스 할 때마다, 권한 확인 작업이 필요 > 파일에 접근했다, 나갔다 반복할 경우 overhead 발생 
+ 
+##### Capability list
+도메인 별로 가지고 있는 파일에 대한 권한 저장
+- Access matirix 의 행을 list 로 표현
+- C list = {<F1, R1>, <F2, R2> ......}
+- 도메인이 Object 접근 시, capability 를 가짐을 제시 후, 검증 승인
+
+- 단점 : 
+    - capability 의 보호를 잘 하지 않으면, 보안에 문제가 생길 수 있다.
+    > 시스템(OS)이 capability list 자체를 보호해야함 > overhead 발생
+    > - 일반적으로 kernel 안에 저장
+    - object 별 권한 관리가 어려움 : 
+    > 만약 특정 object 에 대한 모든 domain 의 권한을 수정하고 싶은 경우 모든 리스트에 접근하여 수정작업이 이루어져야함
+
+##### Lock-key mechanism
+- Access list 와 Capability list 를 혼합
+- Object 는 Lock 을 Domain 은 Key 를 가짐 (Lock/Key 는 unique bit patters)
+- Domain 내 프로세스가 object 접근 시, key 와 lock 의 짝이 맞는지 확인
+
+- 단점 : 시스템이 key list 를 관리해야한다는 overhead 발생
+
+##### Comparison
+|이름|특징|
+|---|---|
+|Global table|간단함, 용량이 큼|
+|Access list|Object 별 권한 관리 용이, Object 접근 시마다 검사 > overhead|
+|Capability list|list 내 object 들에 대한 접근에 유리(빠름)|
+
+##### Access list + Capability list
+1. Object 에 처음 접근할 경우 > Access lsit 탐색
+  - 접근 허용시, Capability 생성 후 해당 프로세스에 전달
+  - 이후 접근시, 권한 겁사 없이 접근 가능
+2. 마지막 접근 후 > Capability 삭제
+
