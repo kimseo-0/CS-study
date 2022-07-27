@@ -208,3 +208,58 @@ ex) <domain name, object name, rights set>
   - 이후 접근시, 권한 겁사 없이 접근 가능
 2. 마지막 접근 후 > Capability 삭제
 
+### File System Implemetation
+#### Allocation methods
+파일 저장을 위한 디스크 공간 할당 방법
+
+##### Continuous Allocation
+한 파일을 디스크의 연속된 block 에 저장
+- 장점 : 효율적인 파일 접근 (순차, 직접 접근)
+- 문제점
+    - 새로운 파일을 위한 공간 확보가 어려움 (연속된 큰 공간 확보가 어려울 수 있으)
+    - External fragmenaation 발생
+    - 파일 공간 크기 결정이 어려움 > 파일의 크기가 더 커지는 경우를 고려해야하기 때문
+
+##### Discontinuos Allocation - Linked Allocation
+파일이 저장된 block 들을 linked list 로 연결
+- Diretory 는 각 파일에 대한 첫번째 block 에 대한 포인터를 가짐
+
+장점
+- 간단함
+- No external fragmentation
+
+단점
+- 직접 접근에 비효율적 > 파일의 특정 부분으로 접근하고 싶으면 linked list 처음부터 따라가야 접근 가능
+- 포인터 저장을 위한 공간 필요 > overhead
+- 신뢰성 문제 > 사용자가 포일터를 실수로 건드리는 문제 등
+
+사용예) 
+- FAT(file allocation table) : 각 block의 시작 부분에 다음 블록의 번호를 기록하는 방법 
+> MS-DOS, Window 등에서 사용
+
+##### Discontinuos Allocation - Indexed Allocation
+파일이 저장된 block 의 정보(pointer) 를 Index block 에 모아둠
+
+장점
+- 직접 접근에 효율적
+단점
+- 순차 접근에 비효율적 > 다음 블록을 찾을 때마다 인덱스 블록에서 찾아야함
+- 파일 당 Index block 을 유지해야함
+    - space overhead
+    - inex block 크기에 따라 저장 가능한 파일의 최대 크기가 제한됨
+> Unix 등에서 사용
+
+#### Fre space management
+디스크의 빈 공간 관리
+- Bit vector
+- Linked list
+- Grouping
+- Counting
+
+##### Bit vector
+시스템 내 모든 block 들에 대한 사용 여부를 1 bit 리ㅁㅎ
+##### Linked list
+##### Grouping
+##### Counting
+
+
