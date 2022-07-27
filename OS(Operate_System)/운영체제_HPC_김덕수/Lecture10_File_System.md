@@ -257,9 +257,26 @@ ex) <domain name, object name, rights set>
 - Counting
 
 ##### Bit vector
-시스템 내 모든 block 들에 대한 사용 여부를 1 bit 리ㅁㅎ
+시스템 내 모든 block 들에 대한 사용 여부를 1 bit flag 로 표시
+
+- 장점 : 간단하고 효율적임
+- 단점 : Bit vector 전체를 메모리에 보관해야함 
+    - space overhead 발생
+    - 대형 시스템에 부적합
+
 ##### Linked list
+빈 block 을 linked list 로 연결
+- 공간 비효율적
+- 탐색 시간 비효율적
+
 ##### Grouping
+n 개의 빈 block 을 그룹으로 묶고, 그룹 단위로 linked list 로 연결
+
+linked list 방법보다
+- 공간 overhead 줄임
+- 탐색 시간 줄임
+
 ##### Counting
-
-
+연속된 빈 block 들 중  
+첫 번째 block 의 주소와 연속된 block 의 수를 mapping 한 table로 유지
+>  continuous allocation 시스템에 유리
