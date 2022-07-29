@@ -196,5 +196,17 @@ RAID 0 + parity disk
 ### RAID 4
 RAID 3 변형
   - block 단위 분산 저장 > RAID 3 와 차이점
-  - 
+  - 독립된 access 방법 > RAID 3 와 동일
+  - Disk 간 균등 분배가 안될 수도 있음 ( 한 disk 에 특정 데이터가 몰려 있을 수 있음) > RAID 3 와 차이점
+  - Write 시 parity 계산 필요 > RAID 3 와 동일
+
+- 병목 현상으로 성능 저하 가능 > 한 disk 에 입출력이 몰리 때
+
+### RAID 5
+RAID 4 변형
+parity 정보를 각 disk 들에 분산 저장 
+  - parity disk 의 병목 현상 문제 해소
+
+> 현재 가장 널리 사용 되는 RAID level 중 하나
+
 
