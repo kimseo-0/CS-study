@@ -1,4 +1,4 @@
-# CS Study
+# CS Study temp
  
 computer science에 대한 전반적인 공부 내용 정리
  
